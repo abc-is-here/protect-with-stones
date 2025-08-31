@@ -1,16 +1,18 @@
 extends RigidBody2D
 
-var is_holding_mouse = false
-var is_shooting = false
-@export var increase_per_hold = 0.1
-@export var decrease_per_release = 0.5
-@export var max_power = 100
-@export var mul = 20
-var shot_once = false
+var is_holding_mouse:bool = false
+var is_shooting:bool = false
+@export var increase_per_hold:float = 0.8
+@export var max_power:float = 100.0
+@export var mul:float = 20.0
+var shot_once:bool = false
+var aim_pos: Vector2
 @onready var pg_bar: ProgressBar = $Sprite2D/ProgressBar
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("drag") and not shot_once:
+		if not is_holding_mouse:
+			aim_pos = get_global_mouse_position()
 		is_holding_mouse = true
 		pg_bar.value = clamp(pg_bar.value + increase_per_hold, 0, max_power)
 	
@@ -18,16 +20,13 @@ func _process(delta: float) -> void:
 		shoot_stone()
 		shot_once = true
 		is_holding_mouse = false
-	
-	if not is_holding_mouse and pg_bar.value > 0:
-		pg_bar.value = max(pg_bar.value - decrease_per_release, 0)
-
+		
 func _physics_process(delta: float) -> void:
-	if is_holding_mouse:
+	if not is_holding_mouse and not shot_once:
 		look_at(get_global_mouse_position())
 	
 func shoot_stone() -> void:
-	var direction = (get_global_mouse_position() - global_position).normalized()
+	var direction = (aim_pos - global_position).normalized()
 	var force = direction*pg_bar.value *mul
 	apply_impulse(force)
 	pg_bar.value = 0

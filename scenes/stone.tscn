@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dlju7axryo3c6"]
+[gd_scene load_steps=7 format=3 uid="uid://dlju7axryo3c6"]
 
 [ext_resource type="Texture2D" uid="uid://bpier3uq4phgx" path="res://icon.svg" id="1_hmdus"]
 [ext_resource type="Script" uid="uid://cshfqea1rhckj" path="res://scripts/stone.gd" id="1_tuldt"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tuldt"]
+friction = 0.8
+bounce = 0.2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tuldt"]
 bg_color = Color(0.308769, 0.308769, 0.308769, 1)
@@ -25,6 +29,8 @@ corner_radius_bottom_left = 5
 radius = 40.0125
 
 [node name="stone" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_tuldt")
+linear_damp = 0.5
 script = ExtResource("1_tuldt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
