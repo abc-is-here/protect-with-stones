@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://dlju7axryo3c6"]
+
+[ext_resource type="Texture2D" uid="uid://bpier3uq4phgx" path="res://icon.svg" id="1_hmdus"]
+[ext_resource type="Script" uid="uid://cshfqea1rhckj" path="res://scripts/stone.gd" id="1_tuldt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tuldt"]
+bg_color = Color(0.308769, 0.308769, 0.308769, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f651v"]
+bg_color = Color(0.374713, 0.696848, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hmdus"]
+radius = 40.0125
+
+[node name="stone" type="RigidBody2D"]
+script = ExtResource("1_tuldt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.625, 0.625)
+texture = ExtResource("1_hmdus")
+
+[node name="ProgressBar" type="ProgressBar" parent="Sprite2D"]
+offset_left = -65.6
+offset_top = -97.6
+offset_right = 72.4
+offset_bottom = -70.6
+theme_override_styles/background = SubResource("StyleBoxFlat_tuldt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_f651v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hmdus")
+
+[node name="Camera2D" type="Camera2D" parent="."]
