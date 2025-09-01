@@ -47,5 +47,3 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_f651v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hmdus")
-
-[node name="Camera2D" type="Camera2D" parent="."]

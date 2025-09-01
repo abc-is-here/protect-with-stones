@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://p31v3ikq2kn6"]
+
+[ext_resource type="Script" uid="uid://cmvs6vv7ix2h4" path="res://scripts/stone_new.gd" id="1_hd0w3"]
+[ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="1_wc8uc"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wc8uc"]
+friction = 0.8
+bounce = 0.2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wc8uc"]
+radius = 1.0
+
+[node name="stone_new" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_wc8uc")
+gravity_scale = 0.6
+script = ExtResource("1_hd0w3")
+
+[node name="stone" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("1_wc8uc")
+offset = Vector2(-3, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wc8uc")
