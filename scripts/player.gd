@@ -4,12 +4,16 @@ extends CharacterBody2D
 @export var charge_speed: float = 10.0
 @export var shoot_power: float = 100.0
 
-@export var speed: float = 160
+@export var speed: float = 200
 @export var acc:int = 5
 @export var dcc: int = 3
-@export var jump_speed: int = -speed*2
+@export var jump_speed: int = -speed*3
 @export var gravity: float = speed*5
 @export var fall_factor: float = 3.0
+
+@export var zoom_min: Vector2 = Vector2(0.5000001, 0.5000001)
+@export var zoom_max: Vector2 = Vector2(2.5000001, 2.5000001)
+@export var zoom_speed: Vector2 = Vector2(0.1000001, 0.1000001)
 
 @onready var slingshot: Sprite2D = $AnimatedSprite2D/Slingshot
 @onready var hand_above: Sprite2D = $AnimatedSprite2D/Slingshot/HandAbove
@@ -18,6 +22,7 @@ extends CharacterBody2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var hand_above_pos_mark: Marker2D = $AnimatedSprite2D/Slingshot/hand_above_pos
+@onready var camera: Camera2D = $Camera2D
 
 var hand_above_pos: Vector2
 var cur_pull: float = 0.0
@@ -112,3 +117,20 @@ func update_states() -> void:
 				cur_state = State.IDLE
 			else:
 				cur_state = State.WALK
+
+func _input(event: InputEvent) -> void:
+	var zoom_change := 0.0
+
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+			zoom_change = -0.1
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+			zoom_change = 0.1
+
+	elif event is InputEventPanGesture:
+		zoom_change = event.delta.y * 0.01
+
+	if zoom_change != 0.0:
+		var zoom = camera.zoom.x
+		zoom = clampf(zoom + zoom_change, zoom_min.x, zoom_max.x)
+		camera.zoom = Vector2(zoom, zoom)
