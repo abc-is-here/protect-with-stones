@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://p31v3ikq2kn6"]
+[gd_scene load_steps=6 format=3 uid="uid://p31v3ikq2kn6"]
 
 [ext_resource type="Script" uid="uid://cmvs6vv7ix2h4" path="res://scripts/stone_new.gd" id="1_hd0w3"]
 [ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="1_wc8uc"]
@@ -8,7 +8,10 @@ friction = 0.8
 bounce = 0.2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wc8uc"]
-radius = 1.0
+radius = 4.12311
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hd0w3"]
+radius = 4.0
 
 [node name="stone_new" type="RigidBody2D"]
 collision_layer = 2
@@ -24,3 +27,8 @@ offset = Vector2(-3, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_wc8uc")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hd0w3")

@@ -1,9 +1,44 @@
-[gd_scene load_steps=6 format=3 uid="uid://gr62bmdtrxqu"]
+[gd_scene load_steps=7 format=3 uid="uid://gr62bmdtrxqu"]
 
 [ext_resource type="Texture2D" uid="uid://cjra58dkwwhdy" path="res://assets/body.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://buecgeklarc6k" path="res://scripts/player.gd" id="1_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://0risugqvupbx" path="res://assets/slingshot.png" id="2_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://bl0i0mm6hsvj2" path="res://assets/hand_above.png" id="4_smehm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dqkch"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qlg0r")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qlg0r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qlg0r")
+}],
+"loop": false,
+"name": &"jump_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qlg0r")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4r1p"]
 radius = 7.0
@@ -13,21 +48,30 @@ height = 98.0
 script = ExtResource("1_tuyoq")
 
 [node name="body" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(4, 4)
 texture = ExtResource("1_qlg0r")
 
-[node name="Slingshot" type="Sprite2D" parent="."]
-position = Vector2(14, 10)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_dqkch")
+animation = &"walk"
+
+[node name="Slingshot" type="Sprite2D" parent="AnimatedSprite2D"]
+position = Vector2(3.5, 2.5)
 texture = ExtResource("2_tuyoq")
 offset = Vector2(-3.5, -2.5)
 
-[node name="HandAbove" type="Sprite2D" parent="Slingshot"]
-position = Vector2(-3.51, -2.52)
+[node name="HandAbove" type="Sprite2D" parent="AnimatedSprite2D/Slingshot"]
+position = Vector2(-3, -1)
 texture = ExtResource("4_smehm")
+offset = Vector2(-0.51, -1.52)
 
-[node name="stone_pos" type="Marker2D" parent="Slingshot"]
+[node name="stone_pos" type="Marker2D" parent="AnimatedSprite2D/Slingshot"]
 position = Vector2(0, -2.5)
+
+[node name="hand_above_pos" type="Marker2D" parent="AnimatedSprite2D/Slingshot"]
+position = Vector2(-3, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-8, -1)
@@ -37,3 +81,10 @@ shape = SubResource("CapsuleShape2D_y4r1p")
 offset = Vector2(100, -20)
 limit_smoothed = true
 position_smoothing_enabled = true
+
+[node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
