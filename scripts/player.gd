@@ -7,13 +7,15 @@ extends CharacterBody2D
 @export var speed: float = 200
 @export var acc:int = 7
 @export var dcc: int = 6
-@export var jump_speed: int = -1100
+@export var jump_speed: int = -800
 @export var gravity: float = 1400
 @export var fall_factor: float = 1.3
 
 @export var zoom_min: Vector2 = Vector2(0.5000001, 0.5000001)
 @export var zoom_max: Vector2 = Vector2(2.5000001, 2.5000001)
 @export var zoom_speed: Vector2 = Vector2(0.1000001, 0.1000001)
+
+@export var decrease_stamina = 0.5
 
 @onready var slingshot: Sprite2D = $AnimatedSprite2D/Slingshot
 @onready var hand_above: Sprite2D = $AnimatedSprite2D/Slingshot/HandAbove
@@ -33,6 +35,8 @@ enum State{IDLE, WALK, JUMP, DOWN}
 var cur_state: State = State.IDLE
 var is_pushing = false
 
+var is_running = false
+
 var PUSH_FORCE = 100.0
 const BOX_MAX_VELOCITY = 180
 
@@ -40,6 +44,16 @@ func _ready() -> void:
 	hand_above_pos = hand_above.position
 
 func _process(delta: float) -> void:
+	if Input.is_action_pressed("run") and Global.stamina>0 and velocity.x != 0:
+		speed = 400
+		Global.stamina-=decrease_stamina*delta
+		is_running = true
+	else:
+		speed = 200
+		is_running = false
+		if Global.stamina < 10:
+			Global.stamina += decrease_stamina*delta
+			
 	if Input.is_action_pressed("drag"):
 		charging = true
 		cur_pull = min(cur_pull + charge_speed*delta, max_pull)
@@ -90,6 +104,7 @@ func handle_inp() -> void:
 		velocity.x = move_toward(velocity.x, 0, dcc)
 	else:
 		velocity.x = move_toward(velocity.x, speed*direction, acc)
+	
 
 func shoot_stone(strength: float) -> void:
 	var stone = preload("res://scenes/stone_new.tscn").instantiate()
@@ -110,24 +125,17 @@ func update_anim() -> void:
 		State.DOWN: animations.play("fall")
 
 func update_move(delta: float) -> void:
-	if (is_on_floor() or coyote_timer.time_left>0) and jump_buffer_timer.time_left >0:
+	if (is_on_floor() or coyote_timer.time_left > 0.0) and jump_buffer_timer.time_left > 0.0:
 		velocity.y = jump_speed
 		cur_state = State.JUMP
 		jump_buffer_timer.stop()
-		coyote_timer.stop( )
-		
-	if not Input.is_action_pressed("jump") and velocity.y <0:
-		velocity.y += gravity*delta*0.5
-	
-	if velocity.y < 0:
-		velocity.y += gravity*delta
+		coyote_timer.stop()
+
+	if velocity.y < 0.0:
+		var up_mult = 1.0 if Input.is_action_pressed("jump") else 2.8
+		velocity.y += gravity * up_mult * delta
 	else:
 		velocity.y += gravity * fall_factor * delta
-		
-	if cur_state == State.JUMP:
-		velocity.y+=gravity*delta
-	else:
-		velocity.y+=gravity*delta*fall_factor
 
 func update_states() -> void:
 	match cur_state:

@@ -48,11 +48,6 @@ height = 98.0
 floor_block_on_wall = false
 script = ExtResource("1_tuyoq")
 
-[node name="body" type="Sprite2D" parent="."]
-visible = false
-scale = Vector2(4, 4)
-texture = ExtResource("1_qlg0r")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_dqkch")
@@ -79,7 +74,6 @@ position = Vector2(-8, -1)
 shape = SubResource("CapsuleShape2D_y4r1p")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(100, -20)
 limit_smoothed = true
 position_smoothing_enabled = true
 
@@ -88,7 +82,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.15
 one_shot = true
 
 [node name="rc_bottom" type="RayCast2D" parent="."]

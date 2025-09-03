@@ -114,6 +114,7 @@ texture = ExtResource("1_r1vlr")
 position = Vector2(0, 70)
 node_a = NodePath("../segment5")
 node_b = NodePath("../box")
+softness = 1.0
 
 [node name="box" parent="." instance=ExtResource("1_kju67")]
 position = Vector2(0, 134)
