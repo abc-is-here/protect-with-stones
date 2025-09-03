@@ -1,5 +1,66 @@
-[gd_scene format=3 uid="uid://d2k2yemhvvjdt"]
+[gd_scene load_steps=3 format=3 uid="uid://d2k2yemhvvjdt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e1iqn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m51wb"]
+radius = 5.0
+height = 18.0
 
 [node name="BoxRope" type="Node2D"]
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1, -163)
+shape = SubResource("CapsuleShape2D_e1iqn")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(0, -148)
+node_a = NodePath("../StaticBody2D")
+node_b = NodePath("../segment")
+softness = 4.0
+
+[node name="segment" type="RigidBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment"]
+position = Vector2(0, -140)
+shape = SubResource("CapsuleShape2D_m51wb")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="."]
+position = Vector2(0, -131)
+node_a = NodePath("../segment")
+node_b = NodePath("../segment2")
+softness = 4.0
+
+[node name="segment2" type="RigidBody2D" parent="."]
+position = Vector2(0, 17)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment2"]
+position = Vector2(0, -140)
+shape = SubResource("CapsuleShape2D_m51wb")
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="."]
+position = Vector2(0, -114)
+node_a = NodePath("../segment2")
+node_b = NodePath("../segment3")
+softness = 4.0
+
+[node name="segment3" type="RigidBody2D" parent="."]
+position = Vector2(0, 34)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment3"]
+position = Vector2(0, -140)
+shape = SubResource("CapsuleShape2D_m51wb")
+
+[node name="PinJoint2D4" type="PinJoint2D" parent="."]
+position = Vector2(0, -97)
+node_a = NodePath("../segment3")
+node_b = NodePath("../segment4")
+softness = 4.0
+
+[node name="segment4" type="RigidBody2D" parent="."]
+position = Vector2(0, 51)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment4"]
+position = Vector2(0, -140)
+shape = SubResource("CapsuleShape2D_m51wb")

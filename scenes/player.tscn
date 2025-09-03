@@ -41,10 +41,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4r1p"]
-radius = 7.0
+radius = 12.0
 height = 98.0
 
 [node name="player" type="CharacterBody2D"]
+floor_block_on_wall = false
 script = ExtResource("1_tuyoq")
 
 [node name="body" type="Sprite2D" parent="."]
@@ -88,3 +89,8 @@ one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.1
+one_shot = true
+
+[node name="rc_bottom" type="RayCast2D" parent="."]
+position = Vector2(-9, 43)
+target_position = Vector2(0, 10)

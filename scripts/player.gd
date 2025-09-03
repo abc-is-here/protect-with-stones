@@ -1,15 +1,15 @@
 extends CharacterBody2D
 
 @export var max_pull: float = 15.0
-@export var charge_speed: float = 10.0
+@export var charge_speed: float = 20.0
 @export var shoot_power: float = 100.0
 
 @export var speed: float = 200
-@export var acc:int = 5
-@export var dcc: int = 3
-@export var jump_speed: int = -speed*3
-@export var gravity: float = speed*5
-@export var fall_factor: float = 3.0
+@export var acc:int = 7
+@export var dcc: int = 6
+@export var jump_speed: int = -1100
+@export var gravity: float = 1400
+@export var fall_factor: float = 1.3
 
 @export var zoom_min: Vector2 = Vector2(0.5000001, 0.5000001)
 @export var zoom_max: Vector2 = Vector2(2.5000001, 2.5000001)
@@ -23,6 +23,7 @@ extends CharacterBody2D
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var hand_above_pos_mark: Marker2D = $AnimatedSprite2D/Slingshot/hand_above_pos
 @onready var camera: Camera2D = $Camera2D
+@onready var rc_bottom: RayCast2D = $rc_bottom
 
 var hand_above_pos: Vector2
 var cur_pull: float = 0.0
@@ -30,6 +31,10 @@ var charging: bool = false
 
 enum State{IDLE, WALK, JUMP, DOWN}
 var cur_state: State = State.IDLE
+var is_pushing = false
+
+var PUSH_FORCE = 100.0
+const BOX_MAX_VELOCITY = 180
 
 func _ready() -> void:
 	hand_above_pos = hand_above.position
@@ -39,31 +44,50 @@ func _process(delta: float) -> void:
 		charging = true
 		cur_pull = min(cur_pull + charge_speed*delta, max_pull)
 		hand_above.position = hand_above_pos+Vector2(-cur_pull, 0).rotated(slingshot.rotation)
+		Engine.time_scale = 0.1
 		
 	if Input.is_action_just_released("drag") and charging:
 		shoot_stone(cur_pull)
 		charging = false
 		cur_pull = 0
 		hand_above.position = hand_above.position.lerp(Vector2(-3.0, -1.0), 1)
+		Engine.time_scale = 1.0
 		
 	slingshot.look_at(get_global_mouse_position())
 	slingshot.rotation = clamp(slingshot.rotation, deg_to_rad(-60), deg_to_rad(60))
+	
+	if rc_bottom.is_colliding():
+		var obj = rc_bottom.get_collider()
+		if obj.is_in_group("box"):
+			PUSH_FORCE = 0
+		else:
+			PUSH_FORCE = 100
 
 func _physics_process(delta: float) -> void:
+	is_pushing = false
 	handle_inp()
 	update_move(delta)
 	update_states()
+	#push_obj()
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collision_block = collision.get_collider()
+		if collision_block.is_in_group("box") and abs(collision_block.get_linear_velocity().x) < BOX_MAX_VELOCITY:
+			collision_block.apply_central_impulse(collision.get_normal() * -PUSH_FORCE)
 	update_anim()
+	
 	move_and_slide()
 
 func handle_inp() -> void:
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer.start()
 
 	var direction = Input.get_axis("left", "right")
 	
-	if direction == 0:
-		velocity.x = move_toward(velocity.x, 0, acc)
+	if direction != 0:
+		velocity.x = move_toward(velocity.x, speed*direction, acc)
+	elif is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, dcc)
 	else:
 		velocity.x = move_toward(velocity.x, speed*direction, acc)
 
@@ -92,6 +116,13 @@ func update_move(delta: float) -> void:
 		jump_buffer_timer.stop()
 		coyote_timer.stop( )
 		
+	if not Input.is_action_pressed("jump") and velocity.y <0:
+		velocity.y += gravity*delta*0.5
+	
+	if velocity.y < 0:
+		velocity.y += gravity*delta
+	else:
+		velocity.y += gravity * fall_factor * delta
 		
 	if cur_state == State.JUMP:
 		velocity.y+=gravity*delta
@@ -105,7 +136,7 @@ func update_states() -> void:
 		State.WALK:
 			if velocity.x ==0:
 				cur_state = State.IDLE
-			if not is_on_floor() and velocity.y>0:
+			if not is_on_floor():
 				cur_state = State.JUMP
 				coyote_timer.start()
 		
@@ -134,3 +165,19 @@ func _input(event: InputEvent) -> void:
 		var zoom = camera.zoom.x
 		zoom = clampf(zoom + zoom_change, zoom_min.x, zoom_max.x)
 		camera.zoom = Vector2(zoom, zoom)
+
+#func push_obj():
+	#var last_collision = get_last_slide_collision()
+	#
+	#if last_collision:
+		#var collider = last_collision.get_collider()
+		#
+		#if "box" in collider.name:
+			#var push_dir = (collider.global_position - global_position).normalized()
+			#
+			#var push_side = abs(push_dir.y) < 0.5
+			#
+			#if push_side:
+				#is_pushing = true
+				#var push_velocity = Vector2(PUSH_FORCE*push_dir)
+				#collider.velocity+=push_velocity
