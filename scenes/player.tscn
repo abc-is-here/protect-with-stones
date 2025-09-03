@@ -44,7 +44,7 @@ animations = [{
 radius = 12.0
 height = 98.0
 
-[node name="player" type="CharacterBody2D"]
+[node name="player" type="CharacterBody2D" groups=["player"]]
 floor_block_on_wall = false
 script = ExtResource("1_tuyoq")
 

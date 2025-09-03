@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxbro8gysd6n4"]
+
+[ext_resource type="Script" uid="uid://cq1js7vijqeb8" path="res://scripts/door_and_button.gd" id="1_1jcky"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hc54r"]
+size = Vector2(74, 560)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jcky"]
+size = Vector2(69, 27)
+
+[node name="door_and_button" type="Node2D"]
+script = ExtResource("1_1jcky")
+
+[node name="door" type="RigidBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door"]
+position = Vector2(1013, 368)
+shape = SubResource("RectangleShape2D_hc54r")
+
+[node name="ColorRect" type="ColorRect" parent="door"]
+offset_left = 976.0
+offset_top = 87.0
+offset_right = 1049.0
+offset_bottom = 646.0
+
+[node name="button" type="Area2D" parent="."]
+position = Vector2(0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="button"]
+offset_left = 494.0
+offset_top = 620.0
+offset_right = 563.0
+offset_bottom = 640.0
+color = Color(0.867111, 0.400439, 1.92523e-07, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="button"]
+position = Vector2(528.5, 633.5)
+shape = SubResource("RectangleShape2D_1jcky")
+
+[connection signal="body_entered" from="button" to="." method="_on_button_body_entered"]
+[connection signal="body_exited" from="button" to="." method="_on_button_body_exited"]
