@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cks5p1d35kxx7" path="res://scenes/box.tscn" id="3_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://dgwwc47uuqew8" path="res://scenes/chain.tscn" id="4_k0juu"]
 [ext_resource type="PackedScene" uid="uid://edrl4y3ktvi2" path="res://scenes/screen_ui.tscn" id="5_71j4m"]
-[ext_resource type="PackedScene" uid="uid://dxbro8gysd6n4" path="res://scenes/door_and_button.tscn" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://4okc6nq0xu53" path="res://scenes/enemy.tscn" id="6_qfnet"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k0juu"]
 size = Vector2(1700, 40.5)
@@ -39,5 +39,5 @@ fall_factor = 2.0
 
 [node name="screen_ui" parent="UI" instance=ExtResource("5_71j4m")]
 
-[node name="door_and_button" parent="." instance=ExtResource("6_qfnet")]
-position = Vector2(-55, -340)
+[node name="enemy" parent="." instance=ExtResource("6_qfnet")]
+position = Vector2(-112, 0)

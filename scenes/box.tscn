@@ -10,6 +10,8 @@ friction = 0.8
 size = Vector2(128, 128)
 
 [node name="box" type="RigidBody2D" groups=["box"]]
+collision_layer = 3
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_ks2v0")
 lock_rotation = true
 script = ExtResource("1_ks2v0")

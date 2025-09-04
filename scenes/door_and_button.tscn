@@ -12,6 +12,8 @@ size = Vector2(69, 27)
 script = ExtResource("1_1jcky")
 
 [node name="door" type="RigidBody2D" parent="."]
+collision_layer = 32771
+collision_mask = 32771
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door"]
 position = Vector2(1013, 368)
@@ -36,6 +38,8 @@ color = Color(0.867111, 0.400439, 1.92523e-07, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="button"]
 position = Vector2(528.5, 633.5)
 shape = SubResource("RectangleShape2D_1jcky")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="body_entered" from="button" to="." method="_on_button_body_entered"]
 [connection signal="body_exited" from="button" to="." method="_on_button_body_exited"]
