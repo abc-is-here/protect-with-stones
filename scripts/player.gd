@@ -15,7 +15,7 @@ extends CharacterBody2D
 @export var zoom_max: Vector2 = Vector2(2.5000001, 2.5000001)
 @export var zoom_speed: Vector2 = Vector2(0.1000001, 0.1000001)
 
-@export var decrease_stamina = 0.5
+@export var decrease_stamina = 3
 
 @onready var slingshot: Sprite2D = $AnimatedSprite2D/Slingshot
 @onready var hand_above: Sprite2D = $AnimatedSprite2D/Slingshot/HandAbove
@@ -52,6 +52,7 @@ func _process(delta: float) -> void:
 		speed = 200
 		is_running = false
 		if Global.stamina < 10:
+			await get_tree().create_timer(1).timeout
 			Global.stamina += decrease_stamina*delta
 			
 	if Input.is_action_pressed("drag"):
@@ -104,7 +105,6 @@ func handle_inp() -> void:
 		velocity.x = move_toward(velocity.x, 0, dcc)
 	else:
 		velocity.x = move_toward(velocity.x, speed*direction, acc)
-	
 
 func shoot_stone(strength: float) -> void:
 	var stone = preload("res://scenes/stone_new.tscn").instantiate()

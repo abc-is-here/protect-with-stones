@@ -117,4 +117,4 @@ node_b = NodePath("../box")
 softness = 1.0
 
 [node name="box" parent="." instance=ExtResource("1_kju67")]
-position = Vector2(0, 134)
+position = Vector2(0, 106)

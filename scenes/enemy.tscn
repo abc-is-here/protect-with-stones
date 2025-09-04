@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://4okc6nq0xu53"]
+[gd_scene load_steps=7 format=3 uid="uid://4okc6nq0xu53"]
 
 [ext_resource type="Texture2D" uid="uid://bmubq2lq1n7of" path="res://assets/enemy_demo.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://jka0jag6m1o" path="res://scripts/enemy.gd" id="1_md0e3"]
@@ -7,6 +7,14 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_md0e3"]
 radius = 12.0
 height = 96.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ra3w"]
+radius = 11.0
+height = 94.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uy6h"]
+radius = 7.0
+height = 32.0
 
 [node name="enemy" type="CharacterBody2D"]
 collision_layer = 2
@@ -36,12 +44,12 @@ target_position = Vector2(0, 11)
 collision_mask = 2
 
 [node name="eye_view_right" type="RayCast2D" parent="."]
-position = Vector2(4, -7)
+position = Vector2(4, 33)
 target_position = Vector2(30, 0)
 collision_mask = 2
 
 [node name="eye_view_left" type="RayCast2D" parent="."]
-position = Vector2(-20, -7)
+position = Vector2(-19, 33)
 target_position = Vector2(-30, 0)
 collision_mask = 2
 
@@ -53,3 +61,19 @@ target_position = Vector2(200, 0)
 visible = false
 position = Vector2(-43, -58)
 texture = ExtResource("3_4ra3w")
+
+[node name="player_catch" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_catch"]
+position = Vector2(-8, 0)
+shape = SubResource("CapsuleShape2D_4ra3w")
+
+[node name="head" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="head"]
+position = Vector2(-7, -50)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_5uy6h")
+
+[connection signal="body_entered" from="player_catch" to="." method="_on_player_catch_body_entered"]
+[connection signal="body_entered" from="head" to="." method="_on_head_body_entered"]
