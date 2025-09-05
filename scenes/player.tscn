@@ -88,3 +88,7 @@ one_shot = true
 [node name="rc_bottom" type="RayCast2D" parent="."]
 position = Vector2(-9, 43)
 target_position = Vector2(0, 10)
+
+[node name="StaminaTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true

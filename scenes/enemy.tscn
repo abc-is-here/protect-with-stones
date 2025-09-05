@@ -16,7 +16,7 @@ height = 94.0
 radius = 7.0
 height = 32.0
 
-[node name="enemy" type="CharacterBody2D"]
+[node name="enemy" type="CharacterBody2D" groups=["character"]]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_md0e3")
@@ -45,12 +45,12 @@ collision_mask = 2
 
 [node name="eye_view_right" type="RayCast2D" parent="."]
 position = Vector2(4, 33)
-target_position = Vector2(30, 0)
+target_position = Vector2(15, 0)
 collision_mask = 2
 
 [node name="eye_view_left" type="RayCast2D" parent="."]
 position = Vector2(-19, 33)
-target_position = Vector2(-30, 0)
+target_position = Vector2(-15, 0)
 collision_mask = 2
 
 [node name="shoot" type="RayCast2D" parent="."]

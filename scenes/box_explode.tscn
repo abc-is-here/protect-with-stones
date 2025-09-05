@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=3 uid="uid://dctpj84sc2ons"]
+
+[ext_resource type="Script" uid="uid://b3jxr0qbmhs06" path="res://scripts/box_explode.gd" id="1_7ixel"]
+[ext_resource type="Texture2D" uid="uid://ddf6v7twqwv7s" path="res://assets/box_blinking.png" id="1_tnn5b"]
+[ext_resource type="PackedScene" uid="uid://cwvafx5v0mvi1" path="res://scenes/blast_particles.tscn" id="2_8bmrn"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks2v0"]
+friction = 0.5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qv55i"]
+atlas = ExtResource("1_tnn5b")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ixel"]
+atlas = ExtResource("1_tnn5b")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bmrn"]
+atlas = ExtResource("1_tnn5b")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjleg"]
+atlas = ExtResource("1_tnn5b")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7peka"]
+atlas = ExtResource("1_tnn5b")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5syhw"]
+atlas = ExtResource("1_tnn5b")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_44tmc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qv55i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ixel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bmrn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjleg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7peka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5syhw")
+}],
+"loop": true,
+"name": &"blink",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ks2v0"]
+size = Vector2(52, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tnn5b"]
+size = Vector2(52, 50)
+
+[node name="blast_box" type="RigidBody2D" groups=["box"]]
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_ks2v0")
+script = ExtResource("1_7ixel")
+explosion_particles = ExtResource("2_8bmrn")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_44tmc")
+animation = &"blink"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ks2v0")
+
+[node name="stone_detect" type="Area2D" parent="."]
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stone_detect"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_tnn5b")
+
+[connection signal="body_entered" from="stone_detect" to="." method="_on_stone_detect_body_entered"]

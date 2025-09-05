@@ -26,6 +26,7 @@ extends CharacterBody2D
 @onready var hand_above_pos_mark: Marker2D = $AnimatedSprite2D/Slingshot/hand_above_pos
 @onready var camera: Camera2D = $Camera2D
 @onready var rc_bottom: RayCast2D = $rc_bottom
+@onready var stamina_timer: Timer = $StaminaTimer
 
 var hand_above_pos: Vector2
 var cur_pull: float = 0.0
@@ -48,24 +49,30 @@ func _process(delta: float) -> void:
 		speed = 400
 		Global.stamina-=decrease_stamina*delta
 		is_running = true
+		stamina_timer.start()
 	else:
 		speed = 200
 		is_running = false
-		if Global.stamina < 10:
-			await get_tree().create_timer(1).timeout
+		if Global.stamina < 10 and not stamina_timer.is_stopped():
+			pass
+		elif Global.stamina < 10:
 			Global.stamina += decrease_stamina*delta
 			
-	if Input.is_action_pressed("drag"):
+	if Input.is_action_just_pressed("drag"):
 		charging = true
+		cur_pull = 0
+	
+	if Input.is_action_pressed("drag") and charging:
+		
 		cur_pull = min(cur_pull + charge_speed*delta, max_pull)
 		hand_above.position = hand_above_pos+Vector2(-cur_pull, 0).rotated(slingshot.rotation)
-		Engine.time_scale = 0.1
+		Engine.time_scale = 0.2
 		
 	if Input.is_action_just_released("drag") and charging:
 		shoot_stone(cur_pull)
 		charging = false
 		cur_pull = 0
-		hand_above.position = hand_above.position.lerp(Vector2(-3.0, -1.0), 1)
+		hand_above.position = hand_above_pos
 		Engine.time_scale = 1.0
 		
 	slingshot.look_at(get_global_mouse_position())
@@ -83,7 +90,6 @@ func _physics_process(delta: float) -> void:
 	handle_inp()
 	update_move(delta)
 	update_states()
-	#push_obj()
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collision_block = collision.get_collider()
@@ -173,19 +179,3 @@ func _input(event: InputEvent) -> void:
 		var zoom = camera.zoom.x
 		zoom = clampf(zoom + zoom_change, zoom_min.x, zoom_max.x)
 		camera.zoom = Vector2(zoom, zoom)
-
-#func push_obj():
-	#var last_collision = get_last_slide_collision()
-	#
-	#if last_collision:
-		#var collider = last_collision.get_collider()
-		#
-		#if "box" in collider.name:
-			#var push_dir = (collider.global_position - global_position).normalized()
-			#
-			#var push_side = abs(push_dir.y) < 0.5
-			#
-			#if push_side:
-				#is_pushing = true
-				#var push_velocity = Vector2(PUSH_FORCE*push_dir)
-				#collider.velocity+=push_velocity

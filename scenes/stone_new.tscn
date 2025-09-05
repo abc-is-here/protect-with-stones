@@ -13,11 +13,12 @@ radius = 4.12311
 [sub_resource type="CircleShape2D" id="CircleShape2D_hd0w3"]
 radius = 4.0
 
-[node name="stone_new" type="RigidBody2D"]
-collision_layer = 0
+[node name="stone_new" type="RigidBody2D" groups=["stone"]]
+collision_layer = 32768
 collision_mask = 2
 physics_material_override = SubResource("PhysicsMaterial_wc8uc")
 gravity_scale = 0.6
+continuous_cd = 1
 script = ExtResource("1_hd0w3")
 
 [node name="stone" type="Sprite2D" parent="."]

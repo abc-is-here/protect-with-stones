@@ -1,10 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://cks5p1d35kxx7"]
 
 [ext_resource type="Texture2D" uid="uid://cl1wpg6qya2ox" path="res://assets/box.png" id="1_3inec"]
-[ext_resource type="Script" uid="uid://bu0pp5xscu0hc" path="res://scripts/box.gd" id="1_ks2v0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks2v0"]
-friction = 0.8
+friction = 0.5
+
+[sub_resource type="GDScript" id="GDScript_3inec"]
+script/source = "extends RigidBody2D
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ks2v0"]
 size = Vector2(64, 64)
@@ -13,7 +16,7 @@ size = Vector2(64, 64)
 collision_layer = 3
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_ks2v0")
-script = ExtResource("1_ks2v0")
+script = SubResource("GDScript_3inec")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
