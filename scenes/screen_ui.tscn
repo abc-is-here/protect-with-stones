@@ -4,9 +4,21 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekp0p"]
 bg_color = Color(0.0728426, 0.0728426, 0.0728426, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0yxf7"]
-bg_color = Color(0.943527, 0.0678133, 1.92523e-07, 1)
+bg_color = Color(0, 0.61084, 0.269037, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="screen_ui" type="Control"]
 layout_mode = 3

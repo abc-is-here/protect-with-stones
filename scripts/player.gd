@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 @export var max_pull: float = 15.0
-@export var charge_speed: float = 20.0
-@export var shoot_power: float = 100.0
+@export var charge_speed: float = 15.0
+@export var shoot_power: float = 80.0
 
 @export var speed: float = 200
 @export var acc:int = 7
