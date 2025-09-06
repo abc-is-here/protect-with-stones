@@ -31,10 +31,11 @@ script = ExtResource("1_ij14n")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 layout_mode = 0
-offset_left = 9.0
-offset_top = 9.0
-offset_right = 22.0
-offset_bottom = 126.0
+offset_left = 25.0
+offset_top = 19.0
+offset_right = 38.0
+offset_bottom = 136.0
+scale = Vector2(2.00241, 1.42802)
 theme_override_styles/background = SubResource("StyleBoxFlat_ekp0p")
 theme_override_styles/fill = SubResource("StyleBoxFlat_0yxf7")
 max_value = 10.0

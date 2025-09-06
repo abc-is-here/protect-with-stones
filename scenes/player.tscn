@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://gr62bmdtrxqu"]
+[gd_scene load_steps=10 format=3 uid="uid://gr62bmdtrxqu"]
 
 [ext_resource type="Texture2D" uid="uid://cjra58dkwwhdy" path="res://assets/body.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://buecgeklarc6k" path="res://scripts/player.gd" id="1_tuyoq"]
@@ -43,6 +43,28 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4r1p"]
 radius = 12.0
 height = 98.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
+bg_color = Color(0.0541422, 0.0541422, 0.0541421, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlg0r"]
+bg_color = Color(0, 0.72549, 0.0901961, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqkch"]
+radius = 14.0
+height = 96.0
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 floor_block_on_wall = false
@@ -92,3 +114,18 @@ target_position = Vector2(0, 10)
 [node name="StaminaTimer" type="Timer" parent="."]
 one_shot = true
 autostart = true
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -59.0
+offset_top = -69.0
+offset_right = 49.0
+offset_bottom = -61.0
+theme_override_styles/background = SubResource("StyleBoxFlat_dqkch")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qlg0r")
+show_percentage = false
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(-8, -1)
+shape = SubResource("CapsuleShape2D_dqkch")

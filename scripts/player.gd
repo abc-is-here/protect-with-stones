@@ -43,6 +43,7 @@ const BOX_MAX_VELOCITY = 180
 
 func _ready() -> void:
 	hand_above_pos = hand_above.position
+	$HealthBar.visible = false
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("run") and Global.stamina>0 and velocity.x != 0:
@@ -84,6 +85,8 @@ func _process(delta: float) -> void:
 			PUSH_FORCE = 0
 		else:
 			PUSH_FORCE = 100
+			
+	$HealthBar.value = Global.player_health
 
 func _physics_process(delta: float) -> void:
 	is_pushing = false
@@ -179,3 +182,10 @@ func _input(event: InputEvent) -> void:
 		var zoom = camera.zoom.x
 		zoom = clampf(zoom + zoom_change, zoom_min.x, zoom_max.x)
 		camera.zoom = Vector2(zoom, zoom)
+
+func decrease_healh(decreased_health):
+	Global.player_health -= decreased_health
+	$HealthBar.visible = true
+	await get_tree().create_timer(2).timeout
+	$HealthBar.visible = false
+	

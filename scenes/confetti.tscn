@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://ca1snsd4aot8i"]
+
+[sub_resource type="Curve" id="Curve_du648"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_xjk0n"]
+colors = PackedColorArray(0.926536, 0.0693557, 0.537113, 1, 0.863256, 0, 0.378774, 1)
+
+[sub_resource type="Gradient" id="Gradient_xejpt"]
+colors = PackedColorArray(0, 0.565627, 0.793776, 1, 0, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_2hbhx"]
+colors = PackedColorArray(0.554496, 0.372276, 1, 1, 0.760916, 0.898618, 1, 1)
+
+[node name="confetti" type="Node2D"]
+
+[node name="confetti" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+one_shot = true
+speed_scale = 0.8
+explosiveness = 1.0
+lifetime_randomness = 0.5
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 500.0
+scale_amount_min = 4.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_du648")
+color = Color(1, 0.356779, 0.854428, 1)
+color_ramp = SubResource("Gradient_xjk0n")
+hue_variation_min = 0.77
+hue_variation_max = 1.0
+
+[node name="confetti2" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 500.0
+scale_amount_min = 4.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_du648")
+color = Color(0, 0.729735, 0.86301, 1)
+color_ramp = SubResource("Gradient_xejpt")
+hue_variation_min = 0.77
+hue_variation_max = 1.0
+
+[node name="confetti3" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 500.0
+scale_amount_min = 4.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_du648")
+color = Color(0.657886, 0.57954, 1, 1)
+color_ramp = SubResource("Gradient_2hbhx")
+hue_variation_min = 0.77
+hue_variation_max = 1.0

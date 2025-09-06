@@ -82,7 +82,7 @@ func shoot_bullets(dir):
 
 func _on_player_catch_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("player caught")
+		body.decrease_healh(10)
 
 
 func _on_head_body_entered(body: Node2D) -> void:
