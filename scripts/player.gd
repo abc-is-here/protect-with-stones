@@ -98,6 +98,8 @@ func _physics_process(delta: float) -> void:
 		var collision_block = collision.get_collider()
 		if collision_block.is_in_group("box") and abs(collision_block.get_linear_velocity().x) < BOX_MAX_VELOCITY:
 			collision_block.apply_central_impulse(collision.get_normal() * -PUSH_FORCE)
+		else:
+			pass
 	update_anim()
 	
 	move_and_slide()

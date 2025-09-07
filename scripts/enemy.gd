@@ -55,9 +55,13 @@ func _physics_process(delta: float) -> void:
 		if col.is_in_group("player"):
 			SPEED = run_speed
 			$exclaim.visible = true
+		else:
+			pass
 		if col.is_in_group("player") and can_shoot:
 			shoot_bullets(direction)
 			velocity.x = 0
+		else:
+			pass
 	else:
 		$exclaim.visible = false
 		SPEED = min_speed

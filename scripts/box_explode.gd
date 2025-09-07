@@ -1,10 +1,10 @@
 extends RigidBody2D
 
 @export var explosion_particles: PackedScene
+@export var blast_collision_area: PackedScene
 
 
 func blast():
-	$"../detect_char/CollisionShape2D".disabled = false
 	if explosion_particles:
 		var particle = explosion_particles.instantiate()
 		particle.position = global_position
@@ -13,7 +13,10 @@ func blast():
 		
 		get_tree().current_scene.add_child(particle)
 	
-	get_parent().on_box_blasted()
+	if blast_collision_area:
+		var blast = blast_collision_area.instantiate()
+		blast.global_position = global_position
+		get_tree().current_scene.add_child(blast)
 	
 	queue_free()
 
