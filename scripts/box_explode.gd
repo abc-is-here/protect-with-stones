@@ -14,9 +14,9 @@ func blast():
 		get_tree().current_scene.add_child(particle)
 	
 	if blast_collision_area:
-		var blast = blast_collision_area.instantiate()
-		blast.global_position = global_position
-		get_tree().current_scene.add_child(blast)
+		var blast_col = blast_collision_area.instantiate()
+		blast_col.global_position = global_position
+		get_tree().current_scene.add_child(blast_col)
 	
 	queue_free()
 

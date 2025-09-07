@@ -36,6 +36,7 @@ segment=""
 player=""
 stone=""
 character=""
+enemy=""
 
 [input]
 

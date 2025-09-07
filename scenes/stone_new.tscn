@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://p31v3ikq2kn6"]
+[gd_scene load_steps=7 format=3 uid="uid://p31v3ikq2kn6"]
 
 [ext_resource type="Script" uid="uid://cmvs6vv7ix2h4" path="res://scripts/stone_new.gd" id="1_hd0w3"]
 [ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="1_wc8uc"]
+[ext_resource type="AudioStream" uid="uid://cglg0mtqkxgdn" path="res://assets/chain_shoot.mp3" id="3_3lpgv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wc8uc"]
 friction = 0.8
@@ -35,5 +36,8 @@ collision_mask = 32769
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_hd0w3")
+
+[node name="chain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_3lpgv")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

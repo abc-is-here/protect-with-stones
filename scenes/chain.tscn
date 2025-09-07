@@ -6,7 +6,7 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r1vlr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i8vwp"]
-radius = 2.0
+radius = 4.0
 height = 14.0
 
 [node name="chain" type="Node2D"]

@@ -6,7 +6,7 @@ func on_box_blasted() -> void:
 
 func _on_detect_char_area_entered(area: Area2D) -> void:
 	var parent = area.get_parent()
-	if parent.is_in_group("character"):
-		parent.queue_free()
+	if parent.is_in_group("enemy"):
+		parent.kill()
 	if parent.is_in_group("player"):
 		parent.decrease_healh(50)

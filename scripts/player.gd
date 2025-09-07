@@ -27,6 +27,7 @@ extends CharacterBody2D
 @onready var camera: Camera2D = $Camera2D
 @onready var rc_bottom: RayCast2D = $rc_bottom
 @onready var stamina_timer: Timer = $StaminaTimer
+@onready var dust_particles: CPUParticles2D = $Dust_particles
 
 var hand_above_pos: Vector2
 var cur_pull: float = 0.0
@@ -38,7 +39,7 @@ var is_pushing = false
 
 var is_running = false
 
-var PUSH_FORCE = 100.0
+var PUSH_FORCE = 140.0
 const BOX_MAX_VELOCITY = 180
 
 func _ready() -> void:
@@ -128,6 +129,11 @@ func shoot_stone(strength: float) -> void:
 func update_anim() -> void:
 	if velocity.x != 0:
 		animations.scale.x=sign(velocity.x) *abs(animations.scale.x)
+	
+	if cur_state == State.WALK and is_on_floor():
+		dust_particles.emitting = true
+	else:
+		dust_particles.emitting = false
 	
 	match cur_state:
 		State.IDLE: animations.play("idle")

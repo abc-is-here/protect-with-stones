@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c46t3rvgr7hac"]
+[gd_scene load_steps=4 format=3 uid="uid://c46t3rvgr7hac"]
 
 [ext_resource type="Script" uid="uid://bcovch8bio2hk" path="res://scripts/blast_area_spawn.gd" id="1_a7n1n"]
+[ext_resource type="AudioStream" uid="uid://3rrtw7ibe37p" path="res://assets/blast.mp3" id="2_to5ry"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_to5ry"]
 radius = 223.081
@@ -12,5 +13,9 @@ script = ExtResource("1_a7n1n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detect_char"]
 shape = SubResource("CircleShape2D_to5ry")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_to5ry")
+volume_db = 20.0
 
 [connection signal="area_entered" from="detect_char" to="." method="_on_detect_char_area_entered"]

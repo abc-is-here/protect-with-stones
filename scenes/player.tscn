@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://gr62bmdtrxqu"]
+[gd_scene load_steps=12 format=3 uid="uid://gr62bmdtrxqu"]
 
 [ext_resource type="Texture2D" uid="uid://cjra58dkwwhdy" path="res://assets/body.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://buecgeklarc6k" path="res://scripts/player.gd" id="1_tuyoq"]
@@ -66,6 +66,13 @@ corner_radius_bottom_left = 5
 radius = 14.0
 height = 96.0
 
+[sub_resource type="Curve" id="Curve_dqkch"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_qlg0r"]
+colors = PackedColorArray(0.611765, 0.203922, 0, 0.65098, 1, 1, 1, 0)
+
 [node name="player" type="CharacterBody2D" groups=["player"]]
 floor_block_on_wall = false
 script = ExtResource("1_tuyoq")
@@ -129,3 +136,20 @@ show_percentage = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(-8, -1)
 shape = SubResource("CapsuleShape2D_dqkch")
+
+[node name="Dust_particles" type="CPUParticles2D" parent="."]
+visible = false
+position = Vector2(0, 48)
+emitting = false
+amount = 20
+lifetime = 0.5
+lifetime_randomness = 0.56
+direction = Vector2(-1, -1)
+spread = 60.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+scale_amount_min = 5.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_dqkch")
+color_ramp = SubResource("Gradient_qlg0r")

@@ -11,6 +11,7 @@ const GRAVITY = 800.0
 @onready var eye_view_right: RayCast2D = $eye_view_right
 @onready var shoot: RayCast2D = $shoot
 
+@export var death_particles: PackedScene
 
 var direction := 1
 var stuck := false
@@ -79,6 +80,7 @@ func shoot_bullets(dir):
 	bullet.global_position = $Sprite2D/bullet_pos.global_position
 	bullet.shoot_bullets(dir)
 	bullet.set_dir(direction)
+	$shoot_sound.play()
 	await get_tree().create_timer(1.5).timeout
 	is_shooting = false
 	await get_tree().create_timer(3).timeout
@@ -88,7 +90,16 @@ func _on_player_catch_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.decrease_healh(10)
 
+func kill():
+	if death_particles:
+		var particle = death_particles.instantiate()
+		particle.position = global_position
+		particle.rotation = global_rotation
+		particle.emitting = true
+		
+		get_tree().current_scene.add_child(particle)
+	queue_free()
 
 func _on_head_body_entered(body: Node2D) -> void:
 	if body.is_in_group("box"):
-		queue_free()
+		kill()
