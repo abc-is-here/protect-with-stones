@@ -1,19 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://cks5p1d35kxx7"]
+[gd_scene load_steps=8 format=3 uid="uid://cks5p1d35kxx7"]
 
 [ext_resource type="Texture2D" uid="uid://cl1wpg6qya2ox" path="res://assets/box.png" id="1_3inec"]
+[ext_resource type="Script" uid="uid://dwirw32btvlic" path="res://scripts/box.gd" id="1_ks2v0"]
 [ext_resource type="AudioStream" uid="uid://d1i3b8mvxp3n8" path="res://assets/box_fall.mp3" id="2_ks2v0"]
+[ext_resource type="PackedScene" uid="uid://diebi3id81ro6" path="res://scenes/fall_box_particles.tscn" id="3_c2ln5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks2v0"]
 friction = 0.5
-
-[sub_resource type="GDScript" id="GDScript_3inec"]
-script/source = "extends RigidBody2D
-
-
-
-func _on_sound_hit_body_entered(body: Node2D) -> void:
-	$AudioStreamPlayer2D.play()
-"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ks2v0"]
 size = Vector2(64, 64)
@@ -25,7 +18,8 @@ size = Vector2(69, 70)
 collision_layer = 3
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_ks2v0")
-script = SubResource("GDScript_3inec")
+script = ExtResource("1_ks2v0")
+dust_particles = ExtResource("3_c2ln5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
@@ -41,6 +35,34 @@ shape = SubResource("RectangleShape2D_c2ln5")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_ks2v0")
-volume_db = 15.0
+volume_db = 23.0
+
+[node name="RayCastBottom" type="RayCast2D" parent="."]
+position = Vector2(0, 29)
+target_position = Vector2(0, 11)
+
+[node name="RayCastTop" type="RayCast2D" parent="."]
+position = Vector2(0, -29)
+target_position = Vector2(0, -11)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(29, 0)
+target_position = Vector2(11, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(-26, 0)
+target_position = Vector2(-11, 0)
+
+[node name="MarkerTop" type="Marker2D" parent="."]
+position = Vector2(0, -32)
+
+[node name="MarkerBottom" type="Marker2D" parent="."]
+position = Vector2(0, 32)
+
+[node name="MarkerRight" type="Marker2D" parent="."]
+position = Vector2(32, 0)
+
+[node name="MarkerLeft" type="Marker2D" parent="."]
+position = Vector2(-32, 0)
 
 [connection signal="body_entered" from="sound_hit" to="." method="_on_sound_hit_body_entered"]

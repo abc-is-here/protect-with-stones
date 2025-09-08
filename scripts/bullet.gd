@@ -1,7 +1,7 @@
 extends Node2D
 
 var dir = 1
-var speed = 600
+var speed = 800
 
 func _physics_process(delta: float) -> void:
 	set_dir(dir)

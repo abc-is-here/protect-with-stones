@@ -16,7 +16,7 @@ extends CharacterBody2D
 @export var zoom_speed: Vector2 = Vector2(0.1000001, 0.1000001)
 
 @export var decrease_stamina = 3
-
+#damage
 @onready var slingshot: Sprite2D = $AnimatedSprite2D/Slingshot
 @onready var hand_above: Sprite2D = $AnimatedSprite2D/Slingshot/HandAbove
 @onready var stone_pos: Marker2D = $AnimatedSprite2D/Slingshot/stone_pos
@@ -24,10 +24,12 @@ extends CharacterBody2D
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var hand_above_pos_mark: Marker2D = $AnimatedSprite2D/Slingshot/hand_above_pos
-@onready var camera: Camera2D = $Camera2D
+@onready var camera: Camera2D = $main_camera
 @onready var rc_bottom: RayCast2D = $rc_bottom
 @onready var stamina_timer: Timer = $StaminaTimer
-@onready var dust_particles: CPUParticles2D = $Dust_particles
+@onready var jump_particles: CPUParticles2D = $JumpParticles
+@onready var projectile_path: Node2D = $ProjectilePath
+@onready var knockback_particles: CPUParticles2D = $knockbackParticles
 
 var hand_above_pos: Vector2
 var cur_pull: float = 0.0
@@ -41,10 +43,16 @@ var is_running = false
 
 var PUSH_FORCE = 140.0
 const BOX_MAX_VELOCITY = 180
+var standing_on_box = false
+
+var knockback: Vector2 = Vector2.ZERO
+var knockback_timer: float = 0.0
+var facing_dir = 1
 
 func _ready() -> void:
 	hand_above_pos = hand_above.position
 	$HealthBar.visible = false
+	$damage.visible = false
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("run") and Global.stamina>0 and velocity.x != 0:
@@ -70,37 +78,50 @@ func _process(delta: float) -> void:
 		hand_above.position = hand_above_pos+Vector2(-cur_pull, 0).rotated(slingshot.rotation)
 		Engine.time_scale = 0.2
 		
+		var start_pos = stone_pos.global_position
+		var dir = slingshot.global_transform.x.normalized()
+		projectile_path.draw_path(start_pos, dir * shoot_power * cur_pull)
+		projectile_path.visible = true
+		
 	if Input.is_action_just_released("drag") and charging:
 		shoot_stone(cur_pull)
 		charging = false
 		cur_pull = 0
 		hand_above.position = hand_above_pos
 		Engine.time_scale = 1.0
+		projectile_path.visible = false
 		
 	slingshot.look_at(get_global_mouse_position())
 	slingshot.rotation = clamp(slingshot.rotation, deg_to_rad(-60), deg_to_rad(60))
 	
+	standing_on_box = false
 	if rc_bottom.is_colliding():
 		var obj = rc_bottom.get_collider()
 		if obj.is_in_group("box"):
-			PUSH_FORCE = 0
-		else:
-			PUSH_FORCE = 100
+			standing_on_box = true
 			
 	$HealthBar.value = Global.player_health
 
 func _physics_process(delta: float) -> void:
 	is_pushing = false
 	handle_inp()
+	if knockback_timer > 0.0:
+		velocity+=knockback
+		knockback = knockback.move_toward(Vector2.ZERO, 50 * delta)
+		knockback_timer -= delta
+	else:
+		knockback = Vector2.ZERO
 	update_move(delta)
 	update_states()
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collision_block = collision.get_collider()
-		if collision_block.is_in_group("box") and abs(collision_block.get_linear_velocity().x) < BOX_MAX_VELOCITY:
-			collision_block.apply_central_impulse(collision.get_normal() * -PUSH_FORCE)
-		else:
-			pass
+		if collision_block is RigidBody2D and collision_block.is_in_group("box"):
+			if abs(collision_block.get_linear_velocity().x) < BOX_MAX_VELOCITY:
+				if standing_on_box and abs(collision.get_normal().y) > 0.9:
+					continue
+				collision_block.apply_central_impulse(collision.get_normal() * -PUSH_FORCE)
+		
 	update_anim()
 	
 	move_and_slide()
@@ -113,6 +134,7 @@ func handle_inp() -> void:
 	
 	if direction != 0:
 		velocity.x = move_toward(velocity.x, speed*direction, acc)
+		facing_dir = sign(direction)
 	elif is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, dcc)
 	else:
@@ -128,13 +150,8 @@ func shoot_stone(strength: float) -> void:
 
 func update_anim() -> void:
 	if velocity.x != 0:
-		animations.scale.x=sign(velocity.x) *abs(animations.scale.x)
-	
-	if cur_state == State.WALK and is_on_floor():
-		dust_particles.emitting = true
-	else:
-		dust_particles.emitting = false
-	
+		animations.scale.x=facing_dir *abs(animations.scale.x)
+		
 	match cur_state:
 		State.IDLE: animations.play("idle")
 		State.WALK: animations.play("walk")
@@ -147,12 +164,17 @@ func update_move(delta: float) -> void:
 		cur_state = State.JUMP
 		jump_buffer_timer.stop()
 		coyote_timer.stop()
+		
+		jump_particles.emitting = true
+		jump_particles.restart()
 
 	if velocity.y < 0.0:
 		var up_mult = 1.0 if Input.is_action_pressed("jump") else 2.8
 		velocity.y += gravity * up_mult * delta
 	else:
 		velocity.y += gravity * fall_factor * delta
+		if is_on_floor():
+			$FallParticles.emitting = true
 
 func update_states() -> void:
 	match cur_state:
@@ -192,8 +214,18 @@ func _input(event: InputEvent) -> void:
 		camera.zoom = Vector2(zoom, zoom)
 
 func decrease_healh(decreased_health):
+	camera.screen_shake(0.7*decreased_health, 0.5)
 	Global.player_health -= decreased_health
 	$HealthBar.visible = true
+	$damage.visible = true
+	await get_tree().create_timer(0.1).timeout
+	$damage.visible = false
 	await get_tree().create_timer(2).timeout
 	$HealthBar.visible = false
-	
+
+func apply_knockback(source: Node2D, force: float, duration: float):
+	var dir = (global_position - source.global_position).normalized()
+	knockback= Vector2(dir.x, 0).normalized()*force
+	knockback.y = -35
+	knockback_timer = duration
+	knockback_particles.emitting = true

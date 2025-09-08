@@ -12,7 +12,7 @@ const GRAVITY = 800.0
 @onready var shoot: RayCast2D = $shoot
 
 @export var death_particles: PackedScene
-
+#shoot_bullets
 var direction := 1
 var stuck := false
 
@@ -53,16 +53,14 @@ func _physics_process(delta: float) -> void:
 	
 	if shoot.is_colliding():
 		var col = shoot.get_collider()
-		if col.is_in_group("player"):
-			SPEED = run_speed
-			$exclaim.visible = true
-		else:
-			pass
-		if col.is_in_group("player") and can_shoot:
-			shoot_bullets(direction)
-			velocity.x = 0
-		else:
-			pass
+		if col:
+			if col.is_in_group("player"):
+				SPEED = run_speed
+				$exclaim.visible = true
+
+			if col.is_in_group("player") and can_shoot:
+				shoot_bullets(direction)
+				velocity.x = 0
 	else:
 		$exclaim.visible = false
 		SPEED = min_speed
@@ -81,6 +79,7 @@ func shoot_bullets(dir):
 	bullet.shoot_bullets(dir)
 	bullet.set_dir(direction)
 	$shoot_sound.play()
+	bullet.get_child(1).emitting = true
 	await get_tree().create_timer(1.5).timeout
 	is_shooting = false
 	await get_tree().create_timer(3).timeout
@@ -89,6 +88,7 @@ func shoot_bullets(dir):
 func _on_player_catch_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.decrease_healh(10)
+		body.apply_knockback(self, 20, 2)
 
 func kill():
 	if death_particles:

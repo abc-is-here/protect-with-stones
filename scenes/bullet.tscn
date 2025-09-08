@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://u52r61svhcxw"]
+[gd_scene load_steps=5 format=3 uid="uid://u52r61svhcxw"]
 
 [ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="1_mkf8s"]
 [ext_resource type="Script" uid="uid://cjvtq8munniv2" path="res://scripts/bullet.gd" id="1_y25gk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y25gk"]
 size = Vector2(8, 8)
+
+[sub_resource type="Gradient" id="Gradient_y25gk"]
+offsets = PackedFloat32Array(0, 0.543333)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="bullet" type="Node2D"]
 script = ExtResource("1_y25gk")
@@ -18,5 +22,22 @@ shape = SubResource("RectangleShape2D_y25gk")
 scale = Vector2(4, 4)
 texture = ExtResource("1_mkf8s")
 offset = Vector2(-3, 1)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(0.960784, 0.752941, 0.305882, 1)
+position = Vector2(4, 0)
+emitting = false
+amount = 200
+lifetime = 0.6
+randomness = 1.0
+lifetime_randomness = 0.6
+spread = 180.0
+gravity = Vector2(2000, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+color = Color(1, 1, 1, 0.65098)
+color_ramp = SubResource("Gradient_y25gk")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

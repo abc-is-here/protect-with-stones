@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://demgmdhhf3w5t"]
 
-[ext_resource type="Script" uid="uid://c3qtaxs5x6evh" path="res://box_explode_hit.gd" id="1_0vghu"]
+[ext_resource type="Script" uid="uid://c3qtaxs5x6evh" path="res://scripts/box_explode_hit.gd" id="1_0vghu"]
 [ext_resource type="PackedScene" uid="uid://dctpj84sc2ons" path="res://scenes/box_explode.tscn" id="2_8mqeq"]
 
 [node name="box_explode_hit" type="Node2D"]
