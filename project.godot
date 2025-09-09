@@ -38,6 +38,7 @@ stone=""
 character=""
 enemy=""
 ground=""
+damage_player=""
 
 [input]
 

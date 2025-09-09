@@ -16,7 +16,8 @@ extends CharacterBody2D
 @export var zoom_speed: Vector2 = Vector2(0.1000001, 0.1000001)
 
 @export var decrease_stamina = 3
-#damage
+
+@onready var shield_particles: CPUParticles2D = $ShieldParticles
 @onready var slingshot: Sprite2D = $AnimatedSprite2D/Slingshot
 @onready var hand_above: Sprite2D = $AnimatedSprite2D/Slingshot/HandAbove
 @onready var stone_pos: Marker2D = $AnimatedSprite2D/Slingshot/stone_pos
@@ -30,6 +31,7 @@ extends CharacterBody2D
 @onready var jump_particles: CPUParticles2D = $JumpParticles
 @onready var projectile_path: Node2D = $ProjectilePath
 @onready var knockback_particles: CPUParticles2D = $knockbackParticles
+@onready var shield_anim: AnimationPlayer = $shield_anim
 
 var hand_above_pos: Vector2
 var cur_pull: float = 0.0
@@ -48,6 +50,9 @@ var standing_on_box = false
 var knockback: Vector2 = Vector2.ZERO
 var knockback_timer: float = 0.0
 var facing_dir = 1
+var shield_active = false
+var shield_broken = false
+var can_rgen_staminea = false
 
 func _ready() -> void:
 	hand_above_pos = hand_above.position
@@ -59,15 +64,19 @@ func _process(delta: float) -> void:
 		speed = 400
 		Global.stamina-=decrease_stamina*delta
 		is_running = true
+		can_rgen_staminea = false
 		stamina_timer.start()
 	else:
 		speed = 200
 		is_running = false
-		if Global.stamina < 10 and not stamina_timer.is_stopped():
-			pass
-		elif Global.stamina < 10:
-			Global.stamina += decrease_stamina*delta
-			
+	if Input.is_action_pressed("shield") and Global.stamina>0:
+		Global.stamina-=decrease_stamina*delta
+		can_rgen_staminea = false
+		stamina_timer.start()
+		
+	if can_rgen_staminea:
+		Global.stamina = min(Global.stamina + decrease_stamina * delta, Global.max_stamina)
+		
 	if Input.is_action_just_pressed("drag"):
 		charging = true
 		cur_pull = 0
@@ -121,9 +130,37 @@ func _physics_process(delta: float) -> void:
 				if standing_on_box and abs(collision.get_normal().y) > 0.9:
 					continue
 				collision_block.apply_central_impulse(collision.get_normal() * -PUSH_FORCE)
-		
-	update_anim()
 	
+	if Input.is_action_pressed("shield") and Global.stamina > 0 and not shield_broken:
+		if not shield_active:
+			shield_particles.emitting = true
+			shield_anim.play("shield_start")
+			shield_active = true
+		
+		Global.stamina -= decrease_stamina * delta
+		
+		if Global.stamina <= 0:
+			shield_active = false
+			shield_broken = true
+			shield_anim.play("shield_end")
+			shield_particles.emitting = false
+
+
+	elif shield_active and (Input.is_action_just_released("shield")):
+		shield_active = false
+		shield_particles.emitting = false
+		shield_anim.play("shield_end")
+		
+	if shield_broken and Global.stamina >= 1:
+		shield_broken = false
+		
+	if Global.stamina <= 0 and shield_active:
+		shield_active = false
+		shield_particles.emitting = false
+		shield_anim.play("shield_end")
+		shield_broken = true
+	
+	update_anim()
 	move_and_slide()
 
 func handle_inp() -> void:
@@ -214,6 +251,8 @@ func _input(event: InputEvent) -> void:
 		camera.zoom = Vector2(zoom, zoom)
 
 func decrease_healh(decreased_health):
+	if shield_active and Global.stamina > 0:
+		return
 	camera.screen_shake(0.7*decreased_health, 0.5)
 	Global.player_health -= decreased_health
 	$HealthBar.visible = true
@@ -226,6 +265,9 @@ func decrease_healh(decreased_health):
 func apply_knockback(source: Node2D, force: float, duration: float):
 	var dir = (global_position - source.global_position).normalized()
 	knockback= Vector2(dir.x, 0).normalized()*force
-	knockback.y = -35
 	knockback_timer = duration
 	knockback_particles.emitting = true
+
+
+func _on_stamina_timer_timeout() -> void:
+	can_rgen_staminea = true

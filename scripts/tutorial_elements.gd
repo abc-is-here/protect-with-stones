@@ -14,6 +14,6 @@ func _on_flag_body_entered(body: Node2D) -> void:
 		confetti.emitting = true
 		confetti1.emitting = true
 		confetti2.emitting = true
-		
+		$flag/win.play()
 		
 		get_tree().current_scene.add_child(particle)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://cdfaj2e6rmlif"]
+[gd_scene load_steps=48 format=4 uid="uid://cdfaj2e6rmlif"]
 
 [ext_resource type="Script" uid="uid://bjrrmdls7q5ox" path="res://scripts/world.gd" id="1_dss4m"]
 [ext_resource type="Texture2D" uid="uid://gk5xxen6rixv" path="res://assets/move_keys.png" id="2_7r4gi"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://kpufkuwuy5m" path="res://assets/grass_block.png" id="7_i7141"]
 [ext_resource type="Texture2D" uid="uid://d1lgqsokrx5uy" path="res://assets/spacebar-Sheet.png" id="8_xo05s"]
 [ext_resource type="Texture2D" uid="uid://c7upsb3tjfjxy" path="res://assets/arrow_red.png" id="9_e3hyu"]
+[ext_resource type="AudioStream" uid="uid://b50vhng4hv51b" path="res://assets/win.mp3" id="10_2lf6f"]
 [ext_resource type="PackedScene" uid="uid://c46t3rvgr7hac" path="res://scenes/blast_area.tscn" id="14_pm21f"]
 [ext_resource type="PackedScene" uid="uid://dctpj84sc2ons" path="res://scenes/box_explode.tscn" id="17_7t5mc"]
 
@@ -196,8 +197,17 @@ animations = [{
 [sub_resource type="Environment" id="Environment_qfnet"]
 background_mode = 3
 glow_enabled = true
-glow_intensity = 2.27
-glow_bloom = 0.36
+glow_intensity = 1.0
+glow_bloom = 0.3
+glow_hdr_scale = 3.54
+fog_mode = 1
+fog_light_color = Color(1, 1, 1, 1)
+fog_light_energy = 1.42
+fog_sun_scatter = 0.24
+fog_density = 1.0
+fog_height = 334.15
+fog_depth_curve = 2.0
+adjustment_enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lakw3"]
 size = Vector2(520, 129)
@@ -364,6 +374,10 @@ texture = ExtResource("6_jhx03")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tutorial_elements/flag"]
 position = Vector2(3484, 248.5)
 shape = SubResource("RectangleShape2D_jhx03")
+
+[node name="win" type="AudioStreamPlayer" parent="tutorial_elements/flag"]
+stream = ExtResource("10_2lf6f")
+volume_db = 12.0
 
 [node name="space_bar" type="AnimatedSprite2D" parent="tutorial_elements"]
 modulate = Color(1, 1, 1, 0.572549)

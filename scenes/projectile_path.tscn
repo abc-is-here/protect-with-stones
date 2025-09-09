@@ -8,6 +8,7 @@ offsets = PackedFloat32Array(0.23, 0.643333, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.517647, 1, 1, 1, 0)
 
 [node name="ProjectilePath" type="Node2D"]
+modulate = Color(2, 2, 2, 1)
 script = ExtResource("1_lqu4r")
 dot_color = Color(1, 1, 1, 0.678431)
 

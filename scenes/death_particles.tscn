@@ -5,6 +5,7 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="DeathParticles" type="CPUParticles2D"]
+modulate = Color(1.6, 1, 1, 1)
 emitting = false
 amount = 50
 one_shot = true

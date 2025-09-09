@@ -6,10 +6,10 @@ point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_uksxm"]
 offsets = PackedFloat32Array(0.506667, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+colors = PackedColorArray(0.984314, 0.780392, 0, 1, 1, 1, 1, 0)
 
 [node name="blast_particles" type="CPUParticles2D"]
-modulate = Color(0.960784, 0.752941, 0.305882, 1)
+modulate = Color(5, 5, 5, 1)
 emitting = false
 amount = 50
 one_shot = true
@@ -22,4 +22,5 @@ initial_velocity_max = 500.0
 scale_amount_min = 20.0
 scale_amount_max = 20.0
 scale_amount_curve = SubResource("Curve_l3p3w")
+color = Color(0.983827, 0.778963, 0, 1)
 color_ramp = SubResource("Gradient_uksxm")
