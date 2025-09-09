@@ -91,6 +91,7 @@ func _on_player_catch_body_entered(body: Node2D) -> void:
 		body.apply_knockback(self, 20, 2)
 
 func kill():
+	$AudioStreamPlayer2D.play()
 	if death_particles:
 		var particle = death_particles.instantiate()
 		particle.position = global_position

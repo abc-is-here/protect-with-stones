@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://gr62bmdtrxqu"]
+[gd_scene load_steps=22 format=3 uid="uid://gr62bmdtrxqu"]
 
 [ext_resource type="Texture2D" uid="uid://cjra58dkwwhdy" path="res://assets/body.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://buecgeklarc6k" path="res://scripts/player.gd" id="1_tuyoq"]
@@ -6,26 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://bl0i0mm6hsvj2" path="res://assets/hand_above.png" id="4_smehm"]
 [ext_resource type="PackedScene" uid="uid://cpwfcrbnr57tt" path="res://scenes/main_camera.tscn" id="5_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://ct5whx7alkjec" path="res://scenes/projectile_path.tscn" id="6_tuyoq"]
+[ext_resource type="AudioStream" uid="uid://dbccbtbuml0cr" path="res://assets/force-field.mp3" id="7_fjrip"]
 
 [sub_resource type="Gradient" id="Gradient_smehm"]
-offsets = PackedFloat32Array(0.753333, 0.926667)
+offsets = PackedFloat32Array(0.766667, 1)
 colors = PackedColorArray(0, 0, 0, 0, 0, 0.94902, 0.988235, 1)
-
-[sub_resource type="Animation" id="Animation_tuyoq"]
-resource_name = "shield_start"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ShieldParticles:spread")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 180.0]
-}
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 length = 0.001
@@ -56,6 +41,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [180.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "shield_start"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShieldParticles:spread")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 180.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ur7pv"]
@@ -150,14 +151,12 @@ position = Vector2(-5, -26)
 scale = Vector2(3, 3)
 emitting = false
 amount = 3000
-lifetime = 0.1
-explosiveness = 0.07
-lifetime_randomness = 0.06
+lifetime = 0.09
 direction = Vector2(1, 1)
 spread = 0.0
-gravity = Vector2(200, 1500)
-initial_velocity_min = 334.18
-initial_velocity_max = 342.42
+gravity = Vector2(2000, 2000)
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
 scale_amount_min = 0.0
 scale_amount_max = 6.0
 color = Color(0, 0.947069, 0.987965, 1)
@@ -294,5 +293,11 @@ scale_amount_max = 12.0
 scale_amount_curve = SubResource("Curve_tuyoq")
 color = Color(1, 1, 1, 0.258824)
 color_ramp = SubResource("Gradient_fjrip")
+
+[node name="shield_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_fjrip")
+volume_db = 21.438
+pitch_scale = 0.68
+parameters/looping = true
 
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]

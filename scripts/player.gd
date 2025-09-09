@@ -32,6 +32,7 @@ extends CharacterBody2D
 @onready var projectile_path: Node2D = $ProjectilePath
 @onready var knockback_particles: CPUParticles2D = $knockbackParticles
 @onready var shield_anim: AnimationPlayer = $shield_anim
+@onready var shield_sound: AudioStreamPlayer2D = $shield_sound
 
 var hand_above_pos: Vector2
 var cur_pull: float = 0.0
@@ -70,7 +71,7 @@ func _process(delta: float) -> void:
 		speed = 200
 		is_running = false
 	if Input.is_action_pressed("shield") and Global.stamina>0:
-		Global.stamina-=decrease_stamina*delta
+		Global.stamina-=decrease_stamina*delta*1.5
 		can_rgen_staminea = false
 		stamina_timer.start()
 		
@@ -136,8 +137,8 @@ func _physics_process(delta: float) -> void:
 			shield_particles.emitting = true
 			shield_anim.play("shield_start")
 			shield_active = true
+			shield_sound.play()
 		
-		Global.stamina -= decrease_stamina * delta
 		
 		if Global.stamina <= 0:
 			shield_active = false
@@ -150,6 +151,7 @@ func _physics_process(delta: float) -> void:
 		shield_active = false
 		shield_particles.emitting = false
 		shield_anim.play("shield_end")
+		shield_sound.stop()
 		
 	if shield_broken and Global.stamina >= 1:
 		shield_broken = false
@@ -159,6 +161,7 @@ func _physics_process(delta: float) -> void:
 		shield_particles.emitting = false
 		shield_anim.play("shield_end")
 		shield_broken = true
+		shield_sound.stop()
 	
 	update_anim()
 	move_and_slide()

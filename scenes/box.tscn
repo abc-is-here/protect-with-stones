@@ -35,7 +35,7 @@ shape = SubResource("RectangleShape2D_c2ln5")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_ks2v0")
-volume_db = 23.0
+volume_db = 12.61
 
 [node name="RayCastBottom" type="RayCast2D" parent="."]
 position = Vector2(0, 29)

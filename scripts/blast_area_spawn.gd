@@ -11,3 +11,5 @@ func _on_detect_char_area_entered(area: Area2D) -> void:
 		parent.kill()
 	if parent.is_in_group("player"):
 		parent.decrease_healh(50)
+	if parent.is_in_group("blast_box"):
+		parent.blast()

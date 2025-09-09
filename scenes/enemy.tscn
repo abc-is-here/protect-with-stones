@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://4okc6nq0xu53"]
+[gd_scene load_steps=10 format=3 uid="uid://4okc6nq0xu53"]
 
 [ext_resource type="Texture2D" uid="uid://bmubq2lq1n7of" path="res://assets/enemy_demo.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://jka0jag6m1o" path="res://scripts/enemy.gd" id="1_md0e3"]
 [ext_resource type="PackedScene" uid="uid://cpgbkosjv5f5v" path="res://scenes/death_particles.tscn" id="2_c4w8v"]
 [ext_resource type="Texture2D" uid="uid://m82sabxe7dku" path="res://assets/exclamation.png" id="3_4ra3w"]
 [ext_resource type="AudioStream" uid="uid://c23mmltcjnc72" path="res://assets/shoot.mp3" id="4_5uy6h"]
+[ext_resource type="AudioStream" uid="uid://cyaxfquf8sa1u" path="res://assets/crush.mp3" id="6_xwavj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_md0e3"]
 radius = 12.0
@@ -80,6 +81,10 @@ shape = SubResource("CapsuleShape2D_5uy6h")
 
 [node name="shoot_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_5uy6h")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_xwavj")
+volume_db = 8.648
 
 [connection signal="body_entered" from="player_catch" to="." method="_on_player_catch_body_entered"]
 [connection signal="body_entered" from="head" to="." method="_on_head_body_entered"]
