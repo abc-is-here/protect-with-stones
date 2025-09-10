@@ -16,7 +16,7 @@ func blast():
 	if blast_collision_area:
 		var blast_col = blast_collision_area.instantiate()
 		blast_col.global_position = global_position
-		get_tree().current_scene.add_child(blast_col)
+		get_tree().current_scene.call_deferred("add_child", blast_col)
 	
 	queue_free()
 

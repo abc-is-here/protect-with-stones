@@ -102,7 +102,7 @@ func _process(delta: float) -> void:
 		projectile_path.visible = false
 		
 	slingshot.look_at(get_global_mouse_position())
-	slingshot.rotation = clamp(slingshot.rotation, deg_to_rad(-60), deg_to_rad(60))
+	slingshot.rotation = clamp(slingshot.rotation, deg_to_rad(-90), deg_to_rad(90))
 	
 	standing_on_box = false
 	if rc_bottom.is_colliding():
