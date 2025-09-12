@@ -7,6 +7,7 @@
 radius = 223.081
 
 [node name="blast_area" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_a7n1n")
 
 [node name="detect_char" type="Area2D" parent="."]
