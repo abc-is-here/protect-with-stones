@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://edrl4y3ktvi2"]
+[gd_scene load_steps=13 format=3 uid="uid://edrl4y3ktvi2"]
 
 [ext_resource type="Script" uid="uid://fy6x1nkyypr3" path="res://scripts/screen_ui.gd" id="1_ij14n"]
 
@@ -20,7 +20,135 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ij14n"]
+bg_color = Color(1, 1, 1, 0.571)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+shadow_color = Color(0, 0, 0, 0.32)
+shadow_size = 10
+
+[sub_resource type="Animation" id="Animation_ekp0p"]
+resource_name = "slide_in_menu"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-41, 0), Vector2(360, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0yxf7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-41, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ij14n"]
+resource_name = "slide_out_menu"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(360, 0), Vector2(-41, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_veyun"]
+_data = {
+&"RESET": SubResource("Animation_0yxf7"),
+&"slide_in_menu": SubResource("Animation_ekp0p"),
+&"slide_out_menu": SubResource("Animation_ij14n")
+}
+
+[sub_resource type="Animation" id="Animation_veyun"]
+resource_name = "text_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1160, 617), Vector2(911, 617)]
+}
+
+[sub_resource type="Animation" id="Animation_qn6p3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1160, 617)]
+}
+
+[sub_resource type="Animation" id="Animation_8pw40"]
+resource_name = "text_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(911, 617), Vector2(1160, 617)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_syeul"]
+_data = {
+&"RESET": SubResource("Animation_qn6p3"),
+&"text_in": SubResource("Animation_veyun"),
+&"text_out": SubResource("Animation_8pw40")
+}
+
 [node name="screen_ui" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,3 +169,87 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_0yxf7")
 max_value = 10.0
 fill_mode = 3
 show_percentage = false
+
+[node name="Label" type="Label" parent="ProgressBar"]
+offset_left = 0.499398
+offset_top = -0.70027
+offset_right = 13.4994
+offset_bottom = 115.3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0.611765, 0.270588, 1)
+theme_override_constants/line_spacing = -4
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 14
+text = "STAMINA"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="menu" type="Control" parent="."]
+process_mode = 3
+anchors_preset = 0
+offset_left = -41.0
+offset_right = -1.0
+offset_bottom = 40.0
+
+[node name="SettingsButton" type="Button" parent="menu"]
+layout_mode = 0
+offset_left = -338.0
+offset_top = 51.0
+offset_right = -17.0
+offset_bottom = 170.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 81
+theme_override_styles/normal = SubResource("StyleBoxFlat_ij14n")
+text = "Settings"
+
+[node name="ControlsButton" type="Button" parent="menu"]
+layout_mode = 0
+offset_left = -338.0
+offset_top = 185.0
+offset_right = -7.0
+offset_bottom = 304.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 81
+theme_override_styles/normal = SubResource("StyleBoxFlat_ij14n")
+text = "Controls"
+
+[node name="QuitButton" type="Button" parent="menu"]
+layout_mode = 0
+offset_left = -338.0
+offset_top = 319.0
+offset_right = -17.0
+offset_bottom = 438.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 81
+theme_override_styles/normal = SubResource("StyleBoxFlat_ij14n")
+text = "Quit"
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1.6, 1.6, 1.6, 1)
+layout_mode = 0
+offset_left = 1160.0
+offset_top = 617.0
+offset_right = 1395.0
+offset_bottom = 647.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 13
+theme_override_font_sizes/font_size = 21
+text = "Made with ❤️ by Abhay"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="menu_anim" type="AnimationPlayer" parent="."]
+root_node = NodePath("../menu")
+libraries = {
+&"": SubResource("AnimationLibrary_veyun")
+}
+
+[node name="text_anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_syeul")
+}
+
+[connection signal="pressed" from="menu/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="menu/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="menu/QuitButton" to="." method="_on_quit_button_pressed"]

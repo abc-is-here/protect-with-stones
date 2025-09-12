@@ -107,7 +107,7 @@ func _process(delta: float) -> void:
 	standing_on_box = false
 	if rc_bottom.is_colliding():
 		var obj = rc_bottom.get_collider()
-		if obj.is_in_group("box"):
+		if obj and obj.is_in_group("box"):
 			standing_on_box = true
 			
 	$HealthBar.value = Global.player_health
