@@ -41,6 +41,8 @@ enemy=""
 ground=""
 damage_player=""
 blast_box=""
+water=""
+bullet=""
 
 [gui]
 
@@ -95,6 +97,10 @@ menu={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_13="Layer 13"
+
 [physics]
 
 common/physics_ticks_per_second=120
@@ -103,6 +109,4 @@ common/physics_ticks_per_second=120
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
 viewport/hdr_2d=true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://gr62bmdtrxqu"]
+[gd_scene load_steps=24 format=3 uid="uid://gr62bmdtrxqu"]
 
 [ext_resource type="Texture2D" uid="uid://cjra58dkwwhdy" path="res://assets/body.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://buecgeklarc6k" path="res://scripts/player.gd" id="1_tuyoq"]
@@ -140,6 +140,13 @@ point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_fjrip"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_fjrip"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_ur7pv"]
+colors = PackedColorArray(0.525226, 1, 0.906794, 1, 1, 1, 1, 0.544)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 floor_block_on_wall = false
@@ -300,4 +307,25 @@ volume_db = 21.438
 pitch_scale = 0.68
 parameters/looping = true
 
+[node name="water" type="CPUParticles2D" parent="."]
+modulate = Color(0, 0.98643, 0.965685, 1)
+position = Vector2(-8, 64)
+emitting = false
+amount = 200
+lifetime = 0.76
+one_shot = true
+explosiveness = 1.0
+randomness = 0.54
+lifetime_randomness = 0.3
+direction = Vector2(0, -1)
+spread = 68.63
+gravity = Vector2(0, -980)
+initial_velocity_min = 200.0
+initial_velocity_max = 451.52
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_fjrip")
+color_ramp = SubResource("Gradient_ur7pv")
+
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

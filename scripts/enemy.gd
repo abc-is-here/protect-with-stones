@@ -103,4 +103,5 @@ func kill():
 
 func _on_head_body_entered(body: Node2D) -> void:
 	if body.is_in_group("box"):
+		body.get_node("crush").play()
 		kill()

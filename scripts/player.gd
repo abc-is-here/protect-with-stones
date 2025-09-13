@@ -274,3 +274,13 @@ func apply_knockback(source: Node2D, force: float, duration: float):
 
 func _on_stamina_timer_timeout() -> void:
 	can_rgen_staminea = true
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("water") and Global.player_health >= 81:
+		$water.emitting = true
+		$water.restart()
+		decrease_healh(80)
+	elif area.is_in_group("water"):
+		$water.emitting = true
+		$water.restart()

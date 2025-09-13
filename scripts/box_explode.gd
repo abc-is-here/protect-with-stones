@@ -22,7 +22,7 @@ func blast():
 
 
 func _on_stone_detect_body_entered(body: Node2D) -> void:
-	if body.is_in_group("stone"):
+	if body.is_in_group("stone") or body.is_in_group("bullet"):
 		body.queue_free()
 		$Sprite2D.play("blink")
 		$Sprite2D.speed_scale+=0.5

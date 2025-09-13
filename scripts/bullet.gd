@@ -12,6 +12,9 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.decrease_healh(5)
 		queue_free()
+	if body.is_in_group("blast_box"):
+		body.blast()
+		queue_free()
 
 func shoot_bullets(d):
 	dir = d

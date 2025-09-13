@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cks5p1d35kxx7"]
+[gd_scene load_steps=9 format=3 uid="uid://cks5p1d35kxx7"]
 
 [ext_resource type="Texture2D" uid="uid://cl1wpg6qya2ox" path="res://assets/box.png" id="1_3inec"]
 [ext_resource type="Script" uid="uid://dwirw32btvlic" path="res://scripts/box.gd" id="1_ks2v0"]
 [ext_resource type="AudioStream" uid="uid://d1i3b8mvxp3n8" path="res://assets/box_fall.mp3" id="2_ks2v0"]
 [ext_resource type="PackedScene" uid="uid://diebi3id81ro6" path="res://scenes/fall_box_particles.tscn" id="3_c2ln5"]
+[ext_resource type="AudioStream" uid="uid://cyaxfquf8sa1u" path="res://assets/crush.mp3" id="5_brpd5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks2v0"]
 friction = 0.5
@@ -36,6 +37,10 @@ shape = SubResource("RectangleShape2D_c2ln5")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_ks2v0")
 volume_db = 12.61
+
+[node name="crush" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_brpd5")
+volume_db = 0.724
 
 [node name="RayCastBottom" type="RayCast2D" parent="."]
 position = Vector2(0, 29)

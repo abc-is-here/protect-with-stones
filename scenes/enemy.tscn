@@ -30,7 +30,7 @@ scale = Vector2(4, 4)
 texture = ExtResource("1_7p1mj")
 
 [node name="bullet_pos" type="Marker2D" parent="Sprite2D"]
-position = Vector2(7.75, -0.5)
+position = Vector2(7.75, 2.25)
 scale = Vector2(0.25, 0.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
