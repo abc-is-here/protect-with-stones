@@ -1,0 +1,211 @@
+[gd_scene load_steps=7 format=3 uid="uid://c7ipnsoi180bp"]
+
+[ext_resource type="Script" uid="uid://bcqjyjcet2w4n" path="res://scripts/title_part.gd" id="1_6q484"]
+[ext_resource type="Texture2D" uid="uid://fny6a3migcij" path="res://assets/chain_segment.png" id="1_iffp1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r1vlr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i8vwp"]
+radius = 4.0
+height = 14.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks2v0"]
+friction = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ks2v0"]
+size = Vector2(25, 40)
+
+[node name="chain" type="Node2D"]
+script = ExtResource("1_6q484")
+
+[node name="anchor" type="StaticBody2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="anchor"]
+shape = SubResource("CapsuleShape2D_r1vlr")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(0, 15)
+node_a = NodePath("../anchor")
+node_b = NodePath("../segment")
+
+[node name="segment" type="RigidBody2D" parent="." groups=["segment"]]
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment"]
+position = Vector2(0, 20)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D" type="Sprite2D" parent="segment"]
+position = Vector2(3, 20)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="."]
+position = Vector2(0, 26)
+node_a = NodePath("../segment")
+node_b = NodePath("../segment2")
+
+[node name="segment2" type="RigidBody2D" parent="." groups=["segment"]]
+position = Vector2(0, 11)
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment2"]
+position = Vector2(0, 21)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="segment2"]
+position = Vector2(3, 21)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D7" type="PinJoint2D" parent="."]
+position = Vector2(0, 38)
+node_a = NodePath("../segment2")
+node_b = NodePath("../segment3")
+
+[node name="segment3" type="RigidBody2D" parent="." groups=["segment"]]
+position = Vector2(0, 24)
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment3"]
+position = Vector2(0, 20)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D" type="Sprite2D" parent="segment3"]
+position = Vector2(3, 20)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="."]
+position = Vector2(0, 50)
+node_a = NodePath("../segment3")
+node_b = NodePath("../segment4")
+
+[node name="segment4" type="RigidBody2D" parent="." groups=["segment"]]
+position = Vector2(0, 35)
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment4"]
+position = Vector2(0, 21)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="segment4"]
+position = Vector2(3, 21)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D8" type="PinJoint2D" parent="."]
+position = Vector2(0, 62)
+node_a = NodePath("../segment4")
+node_b = NodePath("../segment5")
+
+[node name="segment5" type="RigidBody2D" parent="." groups=["segment"]]
+position = Vector2(0, 48)
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment5"]
+position = Vector2(0, 20)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D" type="Sprite2D" parent="segment5"]
+position = Vector2(3, 20)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D4" type="PinJoint2D" parent="."]
+position = Vector2(0, 74)
+node_a = NodePath("../segment5")
+node_b = NodePath("../segment6")
+
+[node name="segment6" type="RigidBody2D" parent="." groups=["segment"]]
+position = Vector2(0, 59)
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment6"]
+position = Vector2(0, 21)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="segment6"]
+position = Vector2(3, 21)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D9" type="PinJoint2D" parent="."]
+position = Vector2(0, 86)
+node_a = NodePath("../segment6")
+node_b = NodePath("../segment7")
+
+[node name="segment7" type="RigidBody2D" parent="." groups=["segment"]]
+position = Vector2(0, 72)
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment7"]
+position = Vector2(0, 20)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D" type="Sprite2D" parent="segment7"]
+position = Vector2(3, 20)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D5" type="PinJoint2D" parent="."]
+position = Vector2(0, 98)
+node_a = NodePath("../segment7")
+node_b = NodePath("../segment8")
+
+[node name="segment8" type="RigidBody2D" parent="." groups=["segment"]]
+position = Vector2(0, 83)
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment8"]
+position = Vector2(0, 21)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="segment8"]
+position = Vector2(3, 21)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D10" type="PinJoint2D" parent="."]
+position = Vector2(0, 110)
+node_a = NodePath("../segment8")
+node_b = NodePath("../segment9")
+
+[node name="segment9" type="RigidBody2D" parent="." groups=["segment"]]
+position = Vector2(0, 96)
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="segment9"]
+position = Vector2(0, 20)
+shape = SubResource("CapsuleShape2D_i8vwp")
+
+[node name="Sprite2D" type="Sprite2D" parent="segment9"]
+position = Vector2(3, 20)
+texture = ExtResource("1_iffp1")
+
+[node name="PinJoint2D6" type="PinJoint2D" parent="."]
+position = Vector2(0, 122)
+node_a = NodePath("../segment9")
+node_b = NodePath("../box")
+
+[node name="box" type="RigidBody2D" parent="." groups=["box"]]
+position = Vector2(0, 152)
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_ks2v0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="box"]
+position = Vector2(-0.5, -10)
+shape = SubResource("RectangleShape2D_ks2v0")
+
+[node name="Label" type="Label" parent="box"]
+modulate = Color(2, 2, 2, 1)
+offset_left = -15.0
+offset_top = -44.0
+offset_right = 25.0
+offset_bottom = 25.7917
+theme_override_font_sizes/font_size = 50
+text = "S"

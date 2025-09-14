@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://gr62bmdtrxqu"]
+[gd_scene load_steps=24 format=3 uid="uid://gr62bmdtrxqu"]
 
 [ext_resource type="Texture2D" uid="uid://cjra58dkwwhdy" path="res://assets/body.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://buecgeklarc6k" path="res://scripts/player.gd" id="1_tuyoq"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cpwfcrbnr57tt" path="res://scenes/main_camera.tscn" id="5_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://ct5whx7alkjec" path="res://scenes/projectile_path.tscn" id="6_tuyoq"]
 [ext_resource type="AudioStream" uid="uid://dbccbtbuml0cr" path="res://assets/force-field.mp3" id="7_fjrip"]
+[ext_resource type="AudioStream" uid="uid://be1ewy1yfwv2u" path="res://assets/jump.mp3" id="8_smehm"]
 
 [sub_resource type="Gradient" id="Gradient_smehm"]
 offsets = PackedFloat32Array(0.766667, 1)
@@ -320,6 +321,10 @@ scale_amount_min = 3.0
 scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_smehm")
 color = Color(0.483746, 0.483746, 0.483746, 1)
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_smehm")
+volume_db = 4.686
 
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

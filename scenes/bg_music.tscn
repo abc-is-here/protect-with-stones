@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cyxhd0x6y26c5"]
+[gd_scene load_steps=3 format=3 uid="uid://cyxhd0x6y26c5"]
 
 [ext_resource type="AudioStream" uid="uid://b7e3gkt7x0o0h" path="res://assets/bg_music.mp3" id="1_p1osb"]
+[ext_resource type="Script" uid="uid://cvdikjr8bp87q" path="res://scripts/bg_music.gd" id="2_8f2av"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer"]
 process_mode = 3
@@ -8,3 +9,4 @@ stream = ExtResource("1_p1osb")
 volume_db = -10.0
 autoplay = true
 parameters/looping = true
+script = ExtResource("2_8f2av")

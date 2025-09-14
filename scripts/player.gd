@@ -86,6 +86,7 @@ func _process(delta: float) -> void:
 		cur_pull = min(cur_pull + charge_speed*delta, max_pull)
 		hand_above.position = hand_above_pos+Vector2(-cur_pull, 0).rotated(slingshot.rotation)
 		Engine.time_scale = 0.2
+		Global.is_slowed = true
 		
 		var start_pos = stone_pos.global_position
 		var dir = slingshot.global_transform.x.normalized()
@@ -99,6 +100,7 @@ func _process(delta: float) -> void:
 		hand_above.position = hand_above_pos
 		Engine.time_scale = 1.0
 		projectile_path.visible = false
+		Global.is_slowed = false
 		
 	slingshot.look_at(get_global_mouse_position())
 	slingshot.rotation = clamp(slingshot.rotation, deg_to_rad(-90), deg_to_rad(90))
@@ -207,6 +209,7 @@ func update_move(delta: float) -> void:
 		jump_buffer_timer.stop()
 		coyote_timer.stop()
 		
+		$Jump.play()
 		jump_particles.emitting = true
 		jump_particles.restart()
 

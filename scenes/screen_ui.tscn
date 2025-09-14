@@ -1025,7 +1025,7 @@ scale = Vector2(1.63434, 1.62751)
 position = Vector2(-333, -545.619)
 
 [node name="ListBg" type="Sprite2D" parent="controls/c1"]
-modulate = Color(1.8, 1.2, 1.2, 1)
+modulate = Color(50, 1, 1, 1)
 position = Vector2(80.5, 12.5)
 scale = Vector2(2.70312, 2.1875)
 texture = ExtResource("2_ekp0p")
@@ -1048,7 +1048,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-333, -505.68)
 
 [node name="ListBg2" type="Sprite2D" parent="controls/c2"]
-modulate = Color(1.8, 1.2, 1.2, 1)
+modulate = Color(50, 1.2, 1.2, 1)
 position = Vector2(81, 13)
 scale = Vector2(2.70312, 2.1875)
 texture = ExtResource("2_ekp0p")
@@ -1071,7 +1071,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-333, -460.827)
 
 [node name="ListBg3" type="Sprite2D" parent="controls/c3"]
-modulate = Color(1.8, 1.2, 1.2, 1)
+modulate = Color(50, 1.2, 1.2, 1)
 position = Vector2(81, 11)
 scale = Vector2(2.70312, 2.1875)
 texture = ExtResource("2_ekp0p")
@@ -1094,7 +1094,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-333, -419.659)
 
 [node name="ListBg4" type="Sprite2D" parent="controls/c4"]
-modulate = Color(1.8, 1.2, 1.2, 1)
+modulate = Color(50, 1.2, 1.2, 1)
 position = Vector2(81, 11)
 scale = Vector2(2.70312, 2.1875)
 texture = ExtResource("2_ekp0p")
@@ -1117,7 +1117,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-333, -382.179)
 
 [node name="ListBg5" type="Sprite2D" parent="controls/c5"]
-modulate = Color(1.8, 1.2, 1.2, 1)
+modulate = Color(50, 1.2, 1.2, 1)
 position = Vector2(81, 12)
 scale = Vector2(2.70312, 2.1875)
 texture = ExtResource("2_ekp0p")
@@ -1140,7 +1140,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-333, -341.012)
 
 [node name="ListBg6" type="Sprite2D" parent="controls/c6"]
-modulate = Color(1.8, 1.2, 1.2, 1)
+modulate = Color(50, 1.2, 1.2, 1)
 position = Vector2(81, 12)
 scale = Vector2(2.70312, 2.1875)
 texture = ExtResource("2_ekp0p")
@@ -1163,7 +1163,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-333, -299.845)
 
 [node name="ListBg7" type="Sprite2D" parent="controls/c7"]
-modulate = Color(1.8, 1.2, 1.2, 1)
+modulate = Color(50, 1.2, 1.2, 1)
 position = Vector2(81, 10)
 scale = Vector2(2.70312, 2.1875)
 texture = ExtResource("2_ekp0p")
@@ -1186,7 +1186,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-333, -261.135)
 
 [node name="ListBg8" type="Sprite2D" parent="controls/c8"]
-modulate = Color(1.8, 1.2, 1.2, 1)
+modulate = Color(50, 1.2, 1.2, 1)
 position = Vector2(81, 13)
 scale = Vector2(2.70312, 2.1875)
 texture = ExtResource("2_ekp0p")
@@ -1234,7 +1234,7 @@ offset_top = -66.0
 offset_right = 570.0
 offset_bottom = 150.0
 theme = SubResource("Theme_8pw40")
-color = Color(0.369095, 0.000879253, 0.965742, 0.566)
+color = Color(0.707949, 0, 0.141736, 0.566)
 
 [node name="volume" type="HSlider" parent="settings"]
 layout_mode = 0
@@ -1255,13 +1255,13 @@ theme_override_font_sizes/font_size = 40
 text = "Volume:"
 
 [node name="mute" type="CheckBox" parent="settings"]
+custom_minimum_size = Vector2(12, 12)
 layout_mode = 0
 offset_left = 485.0
 offset_top = 834.0
 offset_right = 509.0
 offset_bottom = 858.0
-scale = Vector2(2, 2)
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+scale = Vector2(1.5, 1.5)
 theme_override_styles/pressed = SubResource("StyleBoxFlat_veyun")
 
 [node name="resolutions" type="OptionButton" parent="settings"]

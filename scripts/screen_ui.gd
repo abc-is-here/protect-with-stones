@@ -21,8 +21,10 @@ func _ready() -> void:
 
 	health.value = (Global.player_health / Global.max_player_health) * 100.0
 	stamina.value = Global.stamina
+	
+	$settings/resolutions.select(0)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	health.value = Global.player_health
 	$Progress/Stamina.value = Global.stamina
 

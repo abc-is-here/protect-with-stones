@@ -28,7 +28,11 @@ func _process(_delta: float) -> void:
 	if Global.player_health <= 0:
 		Global.trigger_death("died")
 		reset()
-
+	
+	if Input.is_action_just_pressed("enter"):
+		$stop/CollisionShape2D.disabled = true
+		$start/Label.text = "GO!! Go!! Go!! Go!! Go!!"
+		$stop/ColorRect.modulate = Color(1, 1, 1, 0.051)
 
 func _on_fall_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

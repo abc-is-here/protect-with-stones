@@ -16,6 +16,7 @@ rotation_smoothing_enabled = true
 script = ExtResource("1_r5jk0")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(2, 2, 2, 1)
 position = Vector2(3, 324)
 amount = 200
 lifetime = 2.07
