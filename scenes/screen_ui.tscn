@@ -1,25 +1,14 @@
-[gd_scene load_steps=32 format=3 uid="uid://edrl4y3ktvi2"]
+[gd_scene load_steps=34 format=3 uid="uid://edrl4y3ktvi2"]
 
 [ext_resource type="Script" uid="uid://fy6x1nkyypr3" path="res://scripts/screen_ui.gd" id="1_ij14n"]
 [ext_resource type="Texture2D" uid="uid://1yt40d3asqfi" path="res://assets/list_bg.png" id="2_ekp0p"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekp0p"]
-bg_color = Color(0.0728426, 0.0728426, 0.0728426, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-expand_margin_left = 3.0
-expand_margin_top = 5.0
-expand_margin_right = 3.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0yxf7"]
-bg_color = Color(0.0588235, 1, 1, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[ext_resource type="Texture2D" uid="uid://bjwo1pmse4nof" path="res://assets/MainProgressBar/underStamina.png" id="2_ghp7o"]
+[ext_resource type="Texture2D" uid="uid://60wd8ay136wn" path="res://assets/MainProgressBar/overStamina.png" id="3_clpt5"]
+[ext_resource type="Texture2D" uid="uid://dfic7kwiofvcv" path="res://assets/MainProgressBar/progressStamina.png" id="4_rwhxb"]
+[ext_resource type="Texture2D" uid="uid://ciiwrr4xm3oc6" path="res://assets/MainProgressBar/underHealth.png" id="5_filn0"]
+[ext_resource type="Texture2D" uid="uid://lvvdm6oqcqka" path="res://assets/MainProgressBar/overHealth.png" id="6_okley"]
+[ext_resource type="Texture2D" uid="uid://do3wtm25wkb1f" path="res://assets/MainProgressBar/progressHealth.png" id="7_o83k5"]
+[ext_resource type="Texture2D" uid="uid://c5kdsslx0px2k" path="res://assets/MainProgressBar/bg.png" id="8_6v2kt"]
 
 [sub_resource type="Curve" id="Curve_ekp0p"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -608,43 +597,6 @@ _data = {
 &"reset": SubResource("Animation_0yxf7")
 }
 
-[sub_resource type="Animation" id="Animation_ghp7o"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ProgressBar:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(109, 108)]
-}
-
-[sub_resource type="Animation" id="Animation_rfdw0"]
-resource_name = "top-down"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ProgressBar:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(55, -220), Vector2(55, 108)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_clpt5"]
-_data = {
-&"RESET": SubResource("Animation_ghp7o"),
-&"top-down": SubResource("Animation_rfdw0")
-}
-
 [sub_resource type="Animation" id="Animation_o83k5"]
 length = 0.001
 tracks/0/type = "value"
@@ -966,52 +918,59 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ij14n")
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
-layout_mode = 0
-offset_left = 55.0
-offset_top = -220.0
-offset_right = 68.0
-offset_bottom = -103.0
-scale = Vector2(2.00241, 1.42802)
-theme_override_styles/background = SubResource("StyleBoxFlat_ekp0p")
-theme_override_styles/fill = SubResource("StyleBoxFlat_0yxf7")
-max_value = 10.0
-fill_mode = 3
-show_percentage = false
+[node name="Progress" type="Node2D" parent="."]
+process_mode = 1
+position = Vector2(73, 69)
 
-[node name="Label" type="Label" parent="ProgressBar"]
-layout_mode = 0
-offset_left = 0.499398
-offset_top = -0.70027
-offset_right = 13.4994
-offset_bottom = 116.55
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0.0117647, 1, 1, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 12
-text = "STAMINA"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="ProgressBar"]
-modulate = Color(10, 10, 10, 1)
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Progress"]
+modulate = Color(10, 10, 10, 0.104)
 show_behind_parent = true
-position = Vector2(6.49218, 109.242)
-amount = 200
-lifetime = 0.75
+position = Vector2(-4, 59)
+scale = Vector2(11.0317, 2.50064)
+amount = 100
+lifetime = 0.39
 lifetime_randomness = 0.31
+emission_shape = 3
+emission_rect_extents = Vector2(4, 1)
 direction = Vector2(0, -1)
 spread = 10.45
 gravity = Vector2(0, -1500)
 initial_velocity_min = 200.0
 initial_velocity_max = 329.29
-scale_amount_min = 35.26
-scale_amount_max = 40.31
+scale_amount_min = 15.0
+scale_amount_max = 30.0
 scale_amount_curve = SubResource("Curve_ekp0p")
-color = Color(0.00392157, 0.533333, 0.235294, 1)
+color = Color(0.793, 0.464, 0, 0.011)
 color_ramp = SubResource("Gradient_0yxf7")
+
+[node name="Health" type="TextureProgressBar" parent="Progress"]
+process_mode = 1
+offset_left = 51.6667
+offset_top = -20.6667
+offset_right = 351.667
+offset_bottom = 9.33333
+max_value = 10.0
+texture_under = ExtResource("5_filn0")
+texture_over = ExtResource("6_okley")
+texture_progress = ExtResource("7_o83k5")
+
+[node name="Stamina" type="TextureProgressBar" parent="Progress"]
+process_mode = 1
+offset_left = 46.0
+offset_top = -33.0
+offset_right = 146.0
+offset_bottom = -23.0
+scale = Vector2(2, 2)
+max_value = 10.0
+step = 0.09
+nine_patch_stretch = true
+texture_under = ExtResource("2_ghp7o")
+texture_over = ExtResource("3_clpt5")
+texture_progress = ExtResource("4_rwhxb")
+
+[node name="BGprogress" type="Sprite2D" parent="Progress"]
+position = Vector2(-6.66667, -3)
+texture = ExtResource("8_6v2kt")
 
 [node name="menu" type="Control" parent="."]
 process_mode = 3
@@ -1364,12 +1323,6 @@ libraries = {
 }
 autoplay = "controls_slide_in"
 speed_scale = 3.0
-
-[node name="Progres_anim" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_clpt5")
-}
-autoplay = "top-down"
 
 [node name="Settings_anim" type="AnimationPlayer" parent="."]
 libraries = {

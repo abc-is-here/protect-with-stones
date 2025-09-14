@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://gr62bmdtrxqu"]
+[gd_scene load_steps=23 format=3 uid="uid://gr62bmdtrxqu"]
 
 [ext_resource type="Texture2D" uid="uid://cjra58dkwwhdy" path="res://assets/body.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://buecgeklarc6k" path="res://scripts/player.gd" id="1_tuyoq"]
@@ -104,24 +104,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlg0r"]
 size = Vector2(24, 96)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
-bg_color = Color(0.0541422, 0.0541422, 0.0541421, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlg0r"]
-bg_color = Color(0, 0.72549, 0.0901961, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqkch"]
 radius = 14.0
 height = 96.0
@@ -147,6 +129,10 @@ point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_ur7pv"]
 colors = PackedColorArray(0.525226, 1, 0.906794, 1, 1, 1, 1, 0.544)
+
+[sub_resource type="Curve" id="Curve_smehm"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 floor_block_on_wall = false
@@ -225,15 +211,6 @@ target_position = Vector2(0, 10)
 [node name="StaminaTimer" type="Timer" parent="."]
 one_shot = true
 autostart = true
-
-[node name="HealthBar" type="ProgressBar" parent="."]
-offset_left = -59.0
-offset_top = -69.0
-offset_right = 49.0
-offset_bottom = -61.0
-theme_override_styles/background = SubResource("StyleBoxFlat_dqkch")
-theme_override_styles/fill = SubResource("StyleBoxFlat_qlg0r")
-show_percentage = false
 
 [node name="hitbox" type="Area2D" parent="."]
 
@@ -326,6 +303,23 @@ scale_amount_min = 3.0
 scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_fjrip")
 color_ramp = SubResource("Gradient_ur7pv")
+
+[node name="walk" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+position = Vector2(-8, 45)
+amount = 50
+lifetime = 0.41
+explosiveness = 0.24
+randomness = 1.0
+lifetime_randomness = 0.35
+emission_shape = 3
+emission_rect_extents = Vector2(10, 1)
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_smehm")
+color = Color(0.483746, 0.483746, 0.483746, 1)
 
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

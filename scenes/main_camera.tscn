@@ -1,8 +1,37 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpwfcrbnr57tt"]
+[gd_scene load_steps=4 format=3 uid="uid://cpwfcrbnr57tt"]
 
 [ext_resource type="Script" uid="uid://dfectnihtskwh" path="res://scripts/main_camera.gd" id="1_r5jk0"]
+
+[sub_resource type="Curve" id="Curve_r5jk0"]
+_data = [Vector2(0, 0.51462), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_7dc62"]
+offsets = PackedFloat32Array(0, 0.836667)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="main_camera" type="Camera2D"]
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 script = ExtResource("1_r5jk0")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(3, 324)
+amount = 200
+lifetime = 2.07
+randomness = 1.0
+lifetime_randomness = 0.4
+emission_shape = 3
+emission_rect_extents = Vector2(700, 20)
+direction = Vector2(1, -1)
+spread = 180.0
+gravity = Vector2(0, -20)
+initial_velocity_min = 200.0
+initial_velocity_max = 482.83
+damping_min = 2.0
+damping_max = 5.0
+scale_amount_min = 4.0
+scale_amount_max = 8.0
+scale_amount_curve = SubResource("Curve_r5jk0")
+color = Color(0.7173, 0.902704, 0, 1)
+color_ramp = SubResource("Gradient_7dc62")

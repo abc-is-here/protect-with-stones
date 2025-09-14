@@ -14,6 +14,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		queue_free()
 	if body.is_in_group("blast_box"):
 		body.blast()
+	if body.is_in_group("ground"):
 		queue_free()
 
 func shoot_bullets(d):

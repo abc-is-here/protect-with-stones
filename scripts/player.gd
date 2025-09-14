@@ -15,7 +15,7 @@ extends CharacterBody2D
 @export var zoom_max: Vector2 = Vector2(2.5000001, 2.5000001)
 @export var zoom_speed: Vector2 = Vector2(0.1000001, 0.1000001)
 
-@export var decrease_stamina = 3
+@export var decrease_stamina = 2
 
 @onready var shield_particles: CPUParticles2D = $ShieldParticles
 @onready var slingshot: Sprite2D = $AnimatedSprite2D/Slingshot
@@ -57,7 +57,6 @@ var can_rgen_staminea = false
 
 func _ready() -> void:
 	hand_above_pos = hand_above.position
-	$HealthBar.visible = false
 	$damage.visible = false
 
 func _process(delta: float) -> void:
@@ -76,7 +75,7 @@ func _process(delta: float) -> void:
 		stamina_timer.start()
 		
 	if can_rgen_staminea:
-		Global.stamina = min(Global.stamina + decrease_stamina * delta, Global.max_stamina)
+		Global.stamina = min(Global.stamina + 0.5 * delta, Global.max_stamina)
 		
 	if Input.is_action_just_pressed("drag"):
 		charging = true
@@ -110,7 +109,6 @@ func _process(delta: float) -> void:
 		if obj and obj.is_in_group("box"):
 			standing_on_box = true
 			
-	$HealthBar.value = Global.player_health
 
 func _physics_process(delta: float) -> void:
 	is_pushing = false
@@ -146,7 +144,6 @@ func _physics_process(delta: float) -> void:
 			shield_anim.play("shield_end")
 			shield_particles.emitting = false
 
-
 	elif shield_active and (Input.is_action_just_released("shield")):
 		shield_active = false
 		shield_particles.emitting = false
@@ -162,6 +159,11 @@ func _physics_process(delta: float) -> void:
 		shield_anim.play("shield_end")
 		shield_broken = true
 		shield_sound.stop()
+	
+	if velocity.x != 0 and velocity.y != 0:
+		$walk.emitting = true
+	else:
+		$walk.emitting = false
 	
 	update_anim()
 	move_and_slide()
@@ -258,12 +260,9 @@ func decrease_healh(decreased_health):
 		return
 	camera.screen_shake(0.7*decreased_health, 0.5)
 	Global.player_health -= decreased_health
-	$HealthBar.visible = true
 	$damage.visible = true
 	await get_tree().create_timer(0.1).timeout
 	$damage.visible = false
-	await get_tree().create_timer(2).timeout
-	$HealthBar.visible = false
 
 func apply_knockback(source: Node2D, force: float, duration: float):
 	var dir = (global_position - source.global_position).normalized()
@@ -271,16 +270,12 @@ func apply_knockback(source: Node2D, force: float, duration: float):
 	knockback_timer = duration
 	knockback_particles.emitting = true
 
-
 func _on_stamina_timer_timeout() -> void:
 	can_rgen_staminea = true
-
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("water") and Global.player_health >= 81:
 		$water.emitting = true
 		$water.restart()
-		decrease_healh(80)
-	elif area.is_in_group("water"):
-		$water.emitting = true
-		$water.restart()
+		camera.screen_shake(0.7*80, 0.5)
+		

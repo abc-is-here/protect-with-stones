@@ -81,9 +81,8 @@ animation = &"blink"
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ks2v0")
 
-[node name="stone_detect" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 32768
+[node name="stone_detect" type="Area2D" parent="." groups=["blast_box"]]
+collision_mask = 32769
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stone_detect"]
 position = Vector2(0, 1)

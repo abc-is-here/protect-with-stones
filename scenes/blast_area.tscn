@@ -4,13 +4,15 @@
 [ext_resource type="AudioStream" uid="uid://3rrtw7ibe37p" path="res://assets/blast.mp3" id="2_to5ry"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_to5ry"]
-radius = 223.081
+radius = 321.056
 
 [node name="blast_area" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_a7n1n")
 
 [node name="detect_char" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detect_char"]
 shape = SubResource("CircleShape2D_to5ry")
