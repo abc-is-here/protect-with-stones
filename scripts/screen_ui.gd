@@ -8,8 +8,10 @@ var setting_in = false
 @onready var stamina: TextureProgressBar = $Progress/Stamina
 
 func _ready() -> void:
+	$settings/resolutions.select(0)
 	$controls_anim.play("reset")
 	$Settings_anim.play("reset")
+	
 	
 	health.step = 0.01
 	stamina.step = 0.01
@@ -22,11 +24,11 @@ func _ready() -> void:
 	health.value = (Global.player_health / Global.max_player_health) * 100.0
 	stamina.value = Global.stamina
 	
-	$settings/resolutions.select(0)
 
 func _process(_delta: float) -> void:
 	health.value = Global.player_health
 	$Progress/Stamina.value = Global.stamina
+
 
 	if Global.stamina <= 0:
 		$Progress/CPUParticles2D.emitting = false
@@ -34,13 +36,14 @@ func _process(_delta: float) -> void:
 		$Progress/CPUParticles2D.emitting = true
 	
 	if Global.stamina >=0 and Global.stamina <3:
-		$Progress/CPUParticles2D.color = Color(0.0, 0.0, 0.0)
+		$Progress/CPUParticles2D.color = Color(0.0, 0.0, 0.09)
 	if Global.stamina >=3 and Global.stamina <6:
 		$Progress/CPUParticles2D.color = Color(0.793, 0.464, 0.0, 0.011)
 	if Global.stamina >=6:
-		$Progress/CPUParticles2D.color = Color(0.004, 0.533, 0.235)
+		$Progress/CPUParticles2D.color = Color(0.0, 0.741, 0.953, 0.014)
 
 	if Input.is_action_just_pressed("menu"):
+		Engine.time_scale = 1.0
 		if not menu_in:
 			menu_in = true
 			$menu_anim.play("buttons_slide_in")
@@ -61,6 +64,8 @@ func _process(_delta: float) -> void:
 				await $Settings_anim.animation_finished
 				$Settings_anim.play("reset")
 
+			control_in = false
+			setting_in = false
 			menu_in = false
 			$menu_anim.play("buttons_slide_out")
 			$text_anim.play("text_out")

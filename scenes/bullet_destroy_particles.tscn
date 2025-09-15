@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch4bf88qae6ep"]
+
+[sub_resource type="Curve" id="Curve_le8sb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_gjvmd"]
+offsets = PackedFloat32Array(0, 0.616667)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="BulletDestroyParticles" type="CPUParticles2D"]
+modulate = Color(1, 0.899, 0.837, 0.705)
+emitting = false
+amount = 50
+lifetime = 0.49
+one_shot = true
+explosiveness = 0.91
+randomness = 1.0
+lifetime_randomness = 0.54
+spread = 89.55
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 283.84
+scale_amount_min = 5.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_le8sb")
+color_ramp = SubResource("Gradient_gjvmd")

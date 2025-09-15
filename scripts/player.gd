@@ -54,6 +54,7 @@ var facing_dir = 1
 var shield_active = false
 var shield_broken = false
 var can_rgen_staminea = false
+var can_move = true
 
 func _ready() -> void:
 	hand_above_pos = hand_above.position
@@ -110,9 +111,13 @@ func _process(delta: float) -> void:
 		var obj = rc_bottom.get_collider()
 		if obj and obj.is_in_group("box"):
 			standing_on_box = true
-			
 
 func _physics_process(delta: float) -> void:
+	if not can_move:
+		velocity.x = 0
+		velocity.y += gravity * delta
+		move_and_slide()
+		return
 	is_pushing = false
 	handle_inp()
 	if knockback_timer > 0.0:
@@ -261,10 +266,10 @@ func _input(event: InputEvent) -> void:
 func decrease_healh(decreased_health):
 	if shield_active and Global.stamina > 0:
 		return
-	camera.screen_shake(0.7*decreased_health, 0.5)
+	camera.screen_shake(0.9*decreased_health, 0.5)
 	Global.player_health -= decreased_health
 	$damage.visible = true
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.2).timeout
 	$damage.visible = false
 
 func apply_knockback(source: Node2D, force: float, duration: float):
@@ -282,3 +287,14 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		$water.restart()
 		camera.screen_shake(0.7*80, 0.5)
 		
+
+func kill():
+	$AnimatedSprite2D.visible = false
+	$perish.emitting = true
+	$perish.restart()
+	can_move = false
+	
+	await get_tree().create_timer(1).timeout
+	$AnimatedSprite2D.visible = true
+	can_move = true
+	

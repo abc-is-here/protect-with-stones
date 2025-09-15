@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://gr62bmdtrxqu"]
+[gd_scene load_steps=28 format=3 uid="uid://gr62bmdtrxqu"]
 
 [ext_resource type="Texture2D" uid="uid://cjra58dkwwhdy" path="res://assets/body.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://buecgeklarc6k" path="res://scripts/player.gd" id="1_tuyoq"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ct5whx7alkjec" path="res://scenes/projectile_path.tscn" id="6_tuyoq"]
 [ext_resource type="AudioStream" uid="uid://dbccbtbuml0cr" path="res://assets/force-field.mp3" id="7_fjrip"]
 [ext_resource type="AudioStream" uid="uid://be1ewy1yfwv2u" path="res://assets/jump.mp3" id="8_smehm"]
+[ext_resource type="Texture2D" uid="uid://b6u2xm7hiovid" path="res://addons/kenney_particle_pack/circle_05.png" id="9_ur7pv"]
 
 [sub_resource type="Gradient" id="Gradient_smehm"]
 offsets = PackedFloat32Array(0.766667, 1)
@@ -134,6 +135,19 @@ colors = PackedColorArray(0.525226, 1, 0.906794, 1, 1, 1, 1, 0.544)
 [sub_resource type="Curve" id="Curve_smehm"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Curve" id="Curve_y4r1p"]
+_data = [Vector2(0, 0.609187), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_d2wvv"]
+offsets = PackedFloat32Array(0, 0.633333)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_f1ej7"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 floor_block_on_wall = false
@@ -282,7 +296,6 @@ color_ramp = SubResource("Gradient_fjrip")
 [node name="shield_sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_fjrip")
 volume_db = 21.438
-pitch_scale = 0.68
 parameters/looping = true
 
 [node name="water" type="CPUParticles2D" parent="."]
@@ -325,6 +338,28 @@ color = Color(0.483746, 0.483746, 0.483746, 1)
 [node name="Jump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_smehm")
 volume_db = 4.686
+
+[node name="perish" type="CPUParticles2D" parent="."]
+modulate = Color(2, 1, 1, 1)
+texture_filter = 2
+emitting = false
+amount = 200
+texture = ExtResource("9_ur7pv")
+one_shot = true
+explosiveness = 0.36
+randomness = 1.0
+lifetime_randomness = 0.54
+direction = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 250.0
+scale_amount_min = 0.2
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_y4r1p")
+color_ramp = SubResource("Gradient_d2wvv")
+hue_variation_max = 0.59
+hue_variation_curve = SubResource("Curve_f1ej7")
 
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

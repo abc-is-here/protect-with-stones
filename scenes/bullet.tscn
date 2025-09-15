@@ -1,17 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://u52r61svhcxw"]
+[gd_scene load_steps=9 format=3 uid="uid://u52r61svhcxw"]
 
 [ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="1_mkf8s"]
 [ext_resource type="Script" uid="uid://cjvtq8munniv2" path="res://scripts/bullet.gd" id="1_y25gk"]
+[ext_resource type="PackedScene" uid="uid://ch4bf88qae6ep" path="res://scenes/bullet_destroy_particles.tscn" id="2_l5glv"]
+[ext_resource type="Texture2D" uid="uid://c7b42w5j5dj5d" path="res://addons/kenney_particle_pack/circle_01.png" id="4_qncy5"]
+[ext_resource type="Texture2D" uid="uid://cd74ywkihsbwx" path="res://addons/kenney_particle_pack/dirt_02.png" id="5_tamys"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y25gk"]
 size = Vector2(8, 8)
 
 [sub_resource type="Gradient" id="Gradient_y25gk"]
-offsets = PackedFloat32Array(0, 0.543333)
+offsets = PackedFloat32Array(0, 0.126667)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_l5glv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="bullet" type="Node2D" groups=["bullet", "damage_player"]]
 script = ExtResource("1_y25gk")
+Destroyparticles = ExtResource("2_l5glv")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 32769
@@ -26,19 +34,34 @@ texture = ExtResource("1_mkf8s")
 offset = Vector2(-3, 1)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-modulate = Color(0.960784, 0.752941, 0.305882, 1)
+modulate = Color(3, 1.3, 0.3, 1)
 position = Vector2(4, 0)
-emitting = false
 amount = 200
+texture = ExtResource("4_qncy5")
 lifetime = 0.6
 randomness = 1.0
 lifetime_randomness = 0.6
-spread = 180.0
+spread = 46.36
 gravity = Vector2(2000, 0)
 initial_velocity_min = 100.0
 initial_velocity_max = 200.0
-scale_amount_min = 2.0
-scale_amount_max = 3.0
+scale_amount_min = 0.0
+scale_amount_max = 0.03
+color = Color(1, 1, 1, 0.65098)
+color_ramp = SubResource("Gradient_y25gk")
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+modulate = Color(3, 1.5, 0.306, 1)
+position = Vector2(-5, 0)
+amount = 200
+texture = ExtResource("5_tamys")
+spread = 83.64
+gravity = Vector2(2000, 0)
+initial_velocity_min = 378.79
+initial_velocity_max = 524.24
+scale_amount_min = 0.01
+scale_amount_max = 0.05
+scale_amount_curve = SubResource("Curve_l5glv")
 color = Color(1, 1, 1, 0.65098)
 color_ramp = SubResource("Gradient_y25gk")
 
