@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://nsdyjg5ubkhk"]
+
+[ext_resource type="Script" uid="uid://bhmwj7bydi7l0" path="res://scripts/randomizing_power_up.gd" id="1_qemof"]
+[ext_resource type="Texture2D" uid="uid://dedlxdtcbvo1w" path="res://addons/kenney_particle_pack/light_03.png" id="2_v4nil"]
+[ext_resource type="Texture2D" uid="uid://cdvrlchi0xa37" path="res://addons/kenney_particle_pack/magic_02.png" id="3_n4kic"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fjplu"]
+radius = 19.6469
+
+[sub_resource type="Curve" id="Curve_qjmdn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_3pcti"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_hlstd"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, -1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="RandomizingPowerUp" type="Area2D"]
+script = ExtResource("1_qemof")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fjplu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(5, 1, 1, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_v4nil")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(7, 7, 7, 1)
+amount = 200
+texture = ExtResource("3_n4kic")
+lifetime = 0.22
+randomness = 1.0
+lifetime_randomness = 0.57
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
+scale_amount_min = 0.01
+scale_amount_max = 0.02
+scale_amount_curve = SubResource("Curve_qjmdn")
+color = Color(5.58317e-06, 0.667144, 0.900011, 1)
+color_ramp = SubResource("Gradient_3pcti")
+hue_variation_min = 0.24
+hue_variation_max = 0.64
+hue_variation_curve = SubResource("Curve_hlstd")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

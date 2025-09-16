@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://4okc6nq0xu53"]
+[gd_scene load_steps=13 format=3 uid="uid://4okc6nq0xu53"]
 
 [ext_resource type="Texture2D" uid="uid://bmubq2lq1n7of" path="res://assets/enemy_demo.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://jka0jag6m1o" path="res://scripts/enemy.gd" id="1_md0e3"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://m82sabxe7dku" path="res://assets/exclamation.png" id="3_4ra3w"]
 [ext_resource type="AudioStream" uid="uid://c23mmltcjnc72" path="res://assets/shoot.mp3" id="4_5uy6h"]
 [ext_resource type="AudioStream" uid="uid://cyaxfquf8sa1u" path="res://assets/crush.mp3" id="6_xwavj"]
+[ext_resource type="Texture2D" uid="uid://q8ggxibv7xgn" path="res://assets/MainProgressBar/enemyUnder.png" id="7_ipns3"]
+[ext_resource type="Texture2D" uid="uid://buwgjqj8g6vfw" path="res://assets/MainProgressBar/enemyOver.png" id="8_8qclf"]
+[ext_resource type="Texture2D" uid="uid://cpheax73f8vip" path="res://assets/MainProgressBar/enemyProgress.png" id="9_w8i8w"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_md0e3"]
 radius = 12.0
@@ -19,7 +22,7 @@ height = 94.0
 radius = 7.0
 height = 32.0
 
-[node name="enemy" type="CharacterBody2D" groups=["character", "enemy"]]
+[node name="enemy" type="CharacterBody2D" groups=["character", "enemy", "respawnable"]]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_md0e3")
@@ -85,6 +88,16 @@ stream = ExtResource("4_5uy6h")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_xwavj")
 volume_db = 8.648
+
+[node name="healthBar" type="TextureProgressBar" parent="."]
+offset_left = -51.0
+offset_top = -65.0
+offset_right = 249.0
+offset_bottom = -35.0
+scale = Vector2(0.3, 0.3)
+texture_under = ExtResource("7_ipns3")
+texture_over = ExtResource("8_8qclf")
+texture_progress = ExtResource("9_w8i8w")
 
 [connection signal="body_entered" from="player_catch" to="." method="_on_player_catch_body_entered"]
 [connection signal="body_entered" from="head" to="." method="_on_head_body_entered"]

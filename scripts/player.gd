@@ -190,7 +190,7 @@ func handle_inp() -> void:
 		velocity.x = move_toward(velocity.x, speed*direction, acc)
 
 func shoot_stone(strength: float) -> void:
-	var stone = preload("res://scenes/stone_new.tscn").instantiate()
+	var stone = preload("res://scenes/stone_ice.tscn").instantiate()
 	get_parent().add_child(stone)
 	stone.global_position = stone_pos.global_position
 	

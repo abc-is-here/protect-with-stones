@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://uyfwq37kpgcl"]
+
+[ext_resource type="Script" uid="uid://ie1q1nm1acvs" path="res://scripts/stone_ice.gd" id="1_irwfp"]
+[ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="2_irwfp"]
+[ext_resource type="AudioStream" uid="uid://cglg0mtqkxgdn" path="res://assets/chain_shoot.mp3" id="3_31phl"]
+[ext_resource type="Texture2D" uid="uid://c3swgbvv1qbl8" path="res://addons/kenney_particle_pack/dirt_01.png" id="4_31phl"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wc8uc"]
+friction = 0.8
+bounce = 0.2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wc8uc"]
+radius = 4.12311
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hd0w3"]
+radius = 4.0
+
+[sub_resource type="Gradient" id="Gradient_wk5ic"]
+offsets = PackedFloat32Array(0, 0.536667)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_lryld"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[node name="stone_ice" type="RigidBody2D" groups=["stone"]]
+collision_layer = 32768
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_wc8uc")
+gravity_scale = 0.6
+continuous_cd = 1
+script = ExtResource("1_irwfp")
+
+[node name="stone" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("2_irwfp")
+offset = Vector2(-3, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wc8uc")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32769
+collision_mask = 32779
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hd0w3")
+
+[node name="chain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_31phl")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(1, 6, 3, 1)
+amount = 100
+texture = ExtResource("4_31phl")
+lifetime = 0.33
+randomness = 1.0
+lifetime_randomness = 0.37
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 100)
+initial_velocity_min = 50.0
+initial_velocity_max = 60.0
+scale_amount_min = 0.01
+scale_amount_max = 0.03
+color_ramp = SubResource("Gradient_wk5ic")
+hue_variation_curve = SubResource("Curve_lryld")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

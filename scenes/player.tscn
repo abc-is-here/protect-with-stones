@@ -340,7 +340,7 @@ stream = ExtResource("8_smehm")
 volume_db = 4.686
 
 [node name="perish" type="CPUParticles2D" parent="."]
-modulate = Color(2, 1, 1, 1)
+modulate = Color(4, 1, 1, 1)
 texture_filter = 2
 emitting = false
 amount = 200

@@ -64,7 +64,7 @@ size = Vector2(52, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tnn5b"]
 size = Vector2(52, 50)
 
-[node name="blast_box" type="RigidBody2D" groups=["blast_box", "box"]]
+[node name="blast_box" type="RigidBody2D" groups=["blast_box", "box", "respawnable"]]
 process_mode = 3
 collision_layer = 3
 collision_mask = 3

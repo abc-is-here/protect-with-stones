@@ -11,6 +11,7 @@ height = 14.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks2v0"]
 friction = 0.5
+bounce = 0.12
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ks2v0"]
 size = Vector2(25, 40)

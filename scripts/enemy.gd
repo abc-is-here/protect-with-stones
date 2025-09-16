@@ -12,7 +12,8 @@ const GRAVITY = 800.0
 @onready var shoot: RayCast2D = $shoot
 
 @export var death_particles: PackedScene
-#shoot_bullets
+
+var health = 100
 var direction := 1
 var stuck := false
 
@@ -20,11 +21,18 @@ var player_visible = false
 
 var can_shoot = true
 var is_shooting = false
+var frozen = false
+
 
 func  _ready() -> void:
 	$exclaim.visible = false
 
 func _physics_process(delta: float) -> void:
+	if frozen:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+	
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 	
@@ -66,7 +74,9 @@ func _physics_process(delta: float) -> void:
 		SPEED = min_speed
 		if not is_shooting:
 			velocity.x = SPEED*direction
-		
+	
+	if health <= 0:
+		kill()
 
 	move_and_slide()
 
@@ -90,6 +100,10 @@ func _on_player_catch_body_entered(body: Node2D) -> void:
 		body.decrease_healh(10)
 		body.apply_knockback(self, 20, 2)
 
+func decrease_health(damage: float) -> void:
+	health -= damage
+	$healthBar.value = health
+
 func kill():
 	$AudioStreamPlayer2D.play()
 	if death_particles:
@@ -105,3 +119,10 @@ func _on_head_body_entered(body: Node2D) -> void:
 	if body.is_in_group("box"):
 		body.get_node("crush").play()
 		kill()
+
+func freeze() -> void:
+	velocity.x = 0
+	frozen = true
+	await get_tree().create_timer(1).timeout
+	velocity.x = SPEED*direction
+	frozen = false

@@ -13,6 +13,7 @@ config_version=5
 config/name="protect with stones"
 run/main_scene="uid://cdfaj2e6rmlif"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.svg"
 
 [autoload]
@@ -115,3 +116,6 @@ common/physics_ticks_per_second=120
 
 textures/canvas_textures/default_texture_filter=0
 viewport/hdr_2d=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+viewport/defaults/default_clear_color=Color(0.3, 0.3, 0.3, 1)
+viewport/bg_color=Color(0.14, 0.14, 0.14, 1)

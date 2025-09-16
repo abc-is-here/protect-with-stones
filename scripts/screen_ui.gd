@@ -7,10 +7,16 @@ var setting_in = false
 @onready var health: TextureProgressBar = $Progress/Health
 @onready var stamina: TextureProgressBar = $Progress/Stamina
 
+@onready var controls: Control = $controls
+@onready var settings: Control = $settings
+
+
 func _ready() -> void:
 	$settings/resolutions.select(0)
 	$controls_anim.play("reset")
 	$Settings_anim.play("reset")
+	controls.visible = false
+	settings.visible = false
 	
 	
 	health.step = 0.01
@@ -44,12 +50,16 @@ func _process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("menu"):
 		Engine.time_scale = 1.0
+		controls.visible = true
+		settings.visible = true
 		if not menu_in:
 			menu_in = true
 			$menu_anim.play("buttons_slide_in")
 			$text_anim.play("text_in")
 			stamina.modulate = Color(1, 1, 1, 0.51)
 			get_tree().paused = true
+			controls.visible = true
+			settings.visible = true
 		else:
 			if control_in:
 				control_in = false
