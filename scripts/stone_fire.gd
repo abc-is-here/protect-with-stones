@@ -25,6 +25,5 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 				node.queue_free()
 	
 	if body and body.is_in_group("enemy"):
-		body.decrease_health(20)
-		body.freeze()
+		body.burn()
 		queue_free()

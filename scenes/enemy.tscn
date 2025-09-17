@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://4okc6nq0xu53"]
+[gd_scene load_steps=17 format=3 uid="uid://4okc6nq0xu53"]
 
 [ext_resource type="Texture2D" uid="uid://bmubq2lq1n7of" path="res://assets/enemy_demo.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://jka0jag6m1o" path="res://scripts/enemy.gd" id="1_md0e3"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://q8ggxibv7xgn" path="res://assets/MainProgressBar/enemyUnder.png" id="7_ipns3"]
 [ext_resource type="Texture2D" uid="uid://buwgjqj8g6vfw" path="res://assets/MainProgressBar/enemyOver.png" id="8_8qclf"]
 [ext_resource type="Texture2D" uid="uid://cpheax73f8vip" path="res://assets/MainProgressBar/enemyProgress.png" id="9_w8i8w"]
+[ext_resource type="Texture2D" uid="uid://d0ay6teb16q3w" path="res://assets/iced.png" id="10_8qclf"]
+[ext_resource type="Texture2D" uid="uid://dujulv4syog3a" path="res://assets/fire_particle.png" id="11_w8i8w"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_md0e3"]
 radius = 12.0
@@ -21,6 +23,14 @@ height = 94.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uy6h"]
 radius = 7.0
 height = 32.0
+
+[sub_resource type="Curve" id="Curve_otmr2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_wtq4b"]
+offsets = PackedFloat32Array(0, 0.536667)
+colors = PackedColorArray(1, 1, 1, 1, 0.476, 0.476, 0.476, 0)
 
 [node name="enemy" type="CharacterBody2D" groups=["character", "enemy", "respawnable"]]
 collision_layer = 8
@@ -98,6 +108,29 @@ scale = Vector2(0.3, 0.3)
 texture_under = ExtResource("7_ipns3")
 texture_over = ExtResource("8_8qclf")
 texture_progress = ExtResource("9_w8i8w")
+
+[node name="frozen_ice" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-3, 0)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("10_8qclf")
+
+[node name="fire" type="CPUParticles2D" parent="."]
+position = Vector2(-6, -3)
+emitting = false
+amount = 20
+texture = ExtResource("11_w8i8w")
+explosiveness = 0.05
+randomness = 1.0
+lifetime_randomness = 0.6
+emission_shape = 3
+emission_rect_extents = Vector2(15, 50)
+direction = Vector2(0, 0)
+gravity = Vector2(0, -980)
+scale_amount_min = 0.4
+scale_amount_max = 0.8
+scale_amount_curve = SubResource("Curve_otmr2")
+color_ramp = SubResource("Gradient_wtq4b")
 
 [connection signal="body_entered" from="player_catch" to="." method="_on_player_catch_body_entered"]
 [connection signal="body_entered" from="head" to="." method="_on_head_body_entered"]

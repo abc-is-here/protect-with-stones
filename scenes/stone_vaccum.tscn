@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://cqdk2y8j4yqcg"]
+
+[ext_resource type="Script" uid="uid://cfrl1cl4uw84x" path="res://scripts/stone_vaccum.gd" id="1_dq2wg"]
+[ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="2_s4jvm"]
+[ext_resource type="AudioStream" uid="uid://cglg0mtqkxgdn" path="res://assets/chain_shoot.mp3" id="3_si2fd"]
+[ext_resource type="Texture2D" uid="uid://cd74ywkihsbwx" path="res://addons/kenney_particle_pack/dirt_02.png" id="4_dq2wg"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wc8uc"]
+friction = 0.8
+bounce = 0.2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wc8uc"]
+radius = 4.12311
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hd0w3"]
+radius = 4.0
+
+[sub_resource type="Curve" id="Curve_s4jvm"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_si2fd"]
+offsets = PackedFloat32Array(0, 0.3, 1)
+colors = PackedColorArray(0.239347, 0.239347, 0.239347, 1, 0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dq2wg"]
+radius = 97.5141
+
+[node name="stone_vacuum" type="RigidBody2D" groups=["ice_stone", "stone"]]
+collision_layer = 32780
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_wc8uc")
+gravity_scale = 0.6
+continuous_cd = 1
+script = ExtResource("1_dq2wg")
+
+[node name="stone" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("2_s4jvm")
+offset = Vector2(-3, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wc8uc")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32783
+collision_mask = 32783
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hd0w3")
+
+[node name="chain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_si2fd")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+amount = 200
+texture = ExtResource("4_dq2wg")
+local_coords = true
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+radial_accel_min = -500.0
+radial_accel_max = -200.0
+tangential_accel_min = 100.0
+tangential_accel_max = 200.0
+scale_amount_min = 0.01
+scale_amount_max = 0.02
+scale_amount_curve = SubResource("Curve_s4jvm")
+color_ramp = SubResource("Gradient_si2fd")
+hue_variation_min = 0.45
+hue_variation_max = 0.9
+
+[node name="detectEnemy" type="Area2D" parent="."]
+collision_layer = 32783
+collision_mask = 32783
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectEnemy"]
+shape = SubResource("CircleShape2D_dq2wg")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="detectEnemy" to="." method="_on_detect_enemy_body_entered"]
+[connection signal="body_exited" from="detectEnemy" to="." method="_on_detect_enemy_body_exited"]

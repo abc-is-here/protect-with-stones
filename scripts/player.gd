@@ -56,6 +56,12 @@ var shield_broken = false
 var can_rgen_staminea = false
 var can_move = true
 
+@export var stone_variants: Array[PackedScene] = [
+	preload("res://scenes/stone_lightning.tscn"),
+	preload("res://scenes/stone_fire.tscn"),
+	preload("res://scenes/stone_ice.tscn")
+]
+
 func _ready() -> void:
 	hand_above_pos = hand_above.position
 	$damage.visible = false
@@ -190,7 +196,7 @@ func handle_inp() -> void:
 		velocity.x = move_toward(velocity.x, speed*direction, acc)
 
 func shoot_stone(strength: float) -> void:
-	var stone = preload("res://scenes/stone_ice.tscn").instantiate()
+	var stone = preload("res://scenes/stone_lightning.tscn").instantiate()
 	get_parent().add_child(stone)
 	stone.global_position = stone_pos.global_position
 	
@@ -298,3 +304,7 @@ func kill():
 	$AnimatedSprite2D.visible = true
 	can_move = true
 	
+
+func choose_random_power():
+	var rand_index = randi() % stone_variants.size()
+	return stone_variants[rand_index]

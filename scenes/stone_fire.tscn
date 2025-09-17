@@ -1,9 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://uyfwq37kpgcl"]
+[gd_scene load_steps=10 format=3 uid="uid://dc1w04ankkp3k"]
 
-[ext_resource type="Script" uid="uid://ie1q1nm1acvs" path="res://scripts/stone_ice.gd" id="1_irwfp"]
-[ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="2_irwfp"]
-[ext_resource type="AudioStream" uid="uid://cglg0mtqkxgdn" path="res://assets/chain_shoot.mp3" id="3_31phl"]
-[ext_resource type="Texture2D" uid="uid://d3122gxv37660" path="res://addons/kenney_particle_pack/fire_01.png" id="4_31phl"]
+[ext_resource type="Script" uid="uid://s0f70q6bepyj" path="res://scripts/stone_fire.gd" id="1_hp65m"]
+[ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="2_bn3sl"]
+[ext_resource type="AudioStream" uid="uid://cglg0mtqkxgdn" path="res://assets/chain_shoot.mp3" id="3_62oct"]
+[ext_resource type="Texture2D" uid="uid://c3swgbvv1qbl8" path="res://addons/kenney_particle_pack/dirt_01.png" id="4_kmik6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wc8uc"]
 friction = 0.8
@@ -24,17 +24,17 @@ _limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[node name="stone_ice" type="RigidBody2D" groups=["ice_stone", "stone"]]
+[node name="stone_fire" type="RigidBody2D" groups=["ice_stone", "stone"]]
 collision_layer = 32780
 collision_mask = 2
 physics_material_override = SubResource("PhysicsMaterial_wc8uc")
 gravity_scale = 0.6
 continuous_cd = 1
-script = ExtResource("1_irwfp")
+script = ExtResource("1_hp65m")
 
 [node name="stone" type="Sprite2D" parent="."]
 scale = Vector2(4, 4)
-texture = ExtResource("2_irwfp")
+texture = ExtResource("2_bn3sl")
 offset = Vector2(-3, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -48,12 +48,12 @@ collision_mask = 32783
 shape = SubResource("CircleShape2D_hd0w3")
 
 [node name="chain" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_31phl")
+stream = ExtResource("3_62oct")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-modulate = Color(1, 6, 3, 1)
+modulate = Color(6, 1, 1, 1)
 amount = 100
-texture = ExtResource("4_31phl")
+texture = ExtResource("4_kmik6")
 lifetime = 0.33
 randomness = 1.0
 lifetime_randomness = 0.37
