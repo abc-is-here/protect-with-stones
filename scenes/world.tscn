@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=4 uid="uid://cdfaj2e6rmlif"]
+[gd_scene load_steps=84 format=4 uid="uid://cdfaj2e6rmlif"]
 
 [ext_resource type="Script" uid="uid://bjrrmdls7q5ox" path="res://scripts/world.gd" id="1_dss4m"]
 [ext_resource type="Texture2D" uid="uid://gk5xxen6rixv" path="res://assets/move_keys.png" id="2_7r4gi"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://fr3x5vauducb" path="res://assets/start-Sheet.png" id="28_0nbtd"]
 [ext_resource type="Texture2D" uid="uid://b6u2xm7hiovid" path="res://addons/kenney_particle_pack/circle_05.png" id="30_navra"]
 [ext_resource type="PackedScene" uid="uid://nsdyjg5ubkhk" path="res://scenes/randomizing_power_up.tscn" id="31_luhhm"]
+[ext_resource type="PackedScene" uid="uid://ds4d6brse6csr" path="res://scenes/lightning_stone_area.tscn" id="32_fh13f"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_navra"]
 load_path = "res://.godot/imported/1.png-b32b2b6b89d03ef8f000fb9ca934f834.ctex"
@@ -1221,6 +1222,9 @@ color = Color(0, 0, 0, 1)
 
 [node name="RandomizingPowerUp" parent="." instance=ExtResource("31_luhhm")]
 position = Vector2(-461, 178)
+
+[node name="lightning_stone_area" parent="." instance=ExtResource("32_fh13f")]
+position = Vector2(-1648, 132)
 
 [connection signal="body_entered" from="tutorial_elements/flag" to="tutorial_elements" method="_on_flag_body_entered"]
 [connection signal="body_entered" from="fall" to="." method="_on_fall_body_entered"]

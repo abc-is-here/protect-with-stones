@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://ds4d6brse6csr"]
+
+[ext_resource type="Shader" uid="uid://dgqf8x3hvhwt5" path="res://assets/shaders/lightning.gdshader" id="1_3x10v"]
+[ext_resource type="Script" uid="uid://ciwglbt5aeikk" path="res://scripts/lightning_stone_area.gd" id="1_cu5rn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cu5rn"]
+radius = 37.2156
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3x10v"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cu5rn"]
+noise = SubResource("FastNoiseLite_3x10v")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_37fbn"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8oavu"]
+noise = SubResource("FastNoiseLite_37fbn")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37fbn"]
+shader = ExtResource("1_3x10v")
+shader_parameter/noise = SubResource("NoiseTexture2D_cu5rn")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_8oavu")
+shader_parameter/brightness = 3.0
+shader_parameter/time_scale = 2.0
+
+[node name="lightning_stone_area" type="Area2D"]
+script = ExtResource("1_cu5rn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cu5rn")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1.2, 1.2, 1.2, 1)
+material = SubResource("ShaderMaterial_37fbn")
+offset_left = -50.0
+offset_top = -49.0
+offset_right = 50.0
+offset_bottom = 51.0
+color = Color(9.62615e-07, 0.829577, 0.852693, 1)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

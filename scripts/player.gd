@@ -312,5 +312,10 @@ func kill():
 func choose_random_power():
 	var rand_index = randi() % stone_variants.size()
 	cur_stone = stone_variants[rand_index]
-	await get_tree().create_timer(180).timeout
+	await get_tree().create_timer(60).timeout
+	cur_stone = normal_stone
+
+func choose_lightning() -> void:
+	cur_stone = preload("res://scenes/stone_lightning.tscn")
+	await get_tree().create_timer(60).timeout
 	cur_stone = normal_stone

@@ -5,7 +5,7 @@ var is_on_ground = false
 func _ready() -> void:
 	$lightning_root/Sprite2D.visible = false
 	await get_tree().create_timer(5).timeout
-	queue_free()
+	
 
 func _physics_process(delta: float) -> void:
 	$lightning_root.rotation = -rotation
@@ -48,3 +48,4 @@ func _on_ground_detect_body_entered(body: Node2D) -> void:
 
 		await $AnimationPlayer.animation_finished
 		$lightning_root/lightning/CollisionShape2D.disabled = true
+		queue_free()
