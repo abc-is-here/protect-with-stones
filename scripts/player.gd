@@ -57,14 +57,18 @@ var can_rgen_staminea = false
 var can_move = true
 
 @export var stone_variants: Array[PackedScene] = [
-	preload("res://scenes/stone_lightning.tscn"),
+	preload("res://scenes/stone_ice.tscn"),
 	preload("res://scenes/stone_fire.tscn"),
-	preload("res://scenes/stone_ice.tscn")
+	preload("res://scenes/stone_lightning.tscn")
 ]
+
+var normal_stone: PackedScene = preload("res://scenes/stone_new.tscn")
+var cur_stone: PackedScene = preload("res://scenes/stone_new.tscn")
 
 func _ready() -> void:
 	hand_above_pos = hand_above.position
 	$damage.visible = false
+	randomize()
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("run") and Global.stamina>0 and velocity.x != 0:
@@ -196,7 +200,7 @@ func handle_inp() -> void:
 		velocity.x = move_toward(velocity.x, speed*direction, acc)
 
 func shoot_stone(strength: float) -> void:
-	var stone = preload("res://scenes/stone_lightning.tscn").instantiate()
+	var stone = cur_stone.instantiate()
 	get_parent().add_child(stone)
 	stone.global_position = stone_pos.global_position
 	
@@ -307,4 +311,6 @@ func kill():
 
 func choose_random_power():
 	var rand_index = randi() % stone_variants.size()
-	return stone_variants[rand_index]
+	cur_stone = stone_variants[rand_index]
+	await get_tree().create_timer(180).timeout
+	cur_stone = normal_stone

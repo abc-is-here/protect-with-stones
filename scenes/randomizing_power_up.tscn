@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://nsdyjg5ubkhk"]
+[gd_scene load_steps=12 format=3 uid="uid://nsdyjg5ubkhk"]
 
 [ext_resource type="Script" uid="uid://bhmwj7bydi7l0" path="res://scripts/randomizing_power_up.gd" id="1_qemof"]
 [ext_resource type="Texture2D" uid="uid://dedlxdtcbvo1w" path="res://addons/kenney_particle_pack/light_03.png" id="2_v4nil"]
 [ext_resource type="Texture2D" uid="uid://cdvrlchi0xa37" path="res://addons/kenney_particle_pack/magic_02.png" id="3_n4kic"]
+[ext_resource type="Texture2D" uid="uid://cnngbg862bh47" path="res://addons/kenney_particle_pack/circle_02.png" id="4_v4nil"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjplu"]
 radius = 19.6469
@@ -15,6 +16,19 @@ point_count = 2
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="Curve" id="Curve_hlstd"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, -1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_n4kic"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_fjplu"]
+offsets = PackedFloat32Array(0, 0.483333, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.206667, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_3pcti"]
 _limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, -1), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -50,5 +64,26 @@ color_ramp = SubResource("Gradient_3pcti")
 hue_variation_min = 0.24
 hue_variation_max = 0.64
 hue_variation_curve = SubResource("Curve_hlstd")
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+position = Vector2(0, 22)
+emitting = false
+amount = 200
+texture = ExtResource("4_v4nil")
+one_shot = true
+emission_shape = 3
+emission_rect_extents = Vector2(25, 20)
+direction = Vector2(0, -1)
+spread = 56.82
+gravity = Vector2(0, -980)
+initial_velocity_min = 20.0
+initial_velocity_max = 200.0
+scale_amount_min = 0.03
+scale_amount_max = 0.05
+scale_amount_curve = SubResource("Curve_n4kic")
+color = Color(1, 0.214341, 0.653563, 1)
+color_ramp = SubResource("Gradient_fjplu")
+hue_variation_max = 0.45
+hue_variation_curve = SubResource("Curve_3pcti")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

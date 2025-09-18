@@ -33,7 +33,7 @@ func handle_reset() -> void:
 func _process(_delta: float) -> void:
 	
 	if Input.is_action_pressed("respawn"):
-		reset()
+		handle_reset()
 		
 
 	if Global.player_health <= 0:

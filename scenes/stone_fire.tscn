@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc1w04ankkp3k"]
+[gd_scene load_steps=12 format=3 uid="uid://dc1w04ankkp3k"]
 
 [ext_resource type="Script" uid="uid://s0f70q6bepyj" path="res://scripts/stone_fire.gd" id="1_hp65m"]
 [ext_resource type="Texture2D" uid="uid://0og8o0vgfwhs" path="res://assets/stone.png" id="2_bn3sl"]
 [ext_resource type="AudioStream" uid="uid://cglg0mtqkxgdn" path="res://assets/chain_shoot.mp3" id="3_62oct"]
 [ext_resource type="Texture2D" uid="uid://c3swgbvv1qbl8" path="res://addons/kenney_particle_pack/dirt_01.png" id="4_kmik6"]
+[ext_resource type="Texture2D" uid="uid://dujulv4syog3a" path="res://assets/fire_particle.png" id="5_bn3sl"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wc8uc"]
 friction = 0.8
@@ -23,6 +24,10 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 _limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
+
+[sub_resource type="Curve" id="Curve_62oct"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="stone_fire" type="RigidBody2D" groups=["ice_stone", "stone"]]
 collision_layer = 32780
@@ -66,5 +71,20 @@ scale_amount_min = 0.01
 scale_amount_max = 0.03
 color_ramp = SubResource("Gradient_wk5ic")
 hue_variation_curve = SubResource("Curve_lryld")
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+amount = 50
+texture = ExtResource("5_bn3sl")
+lifetime = 0.13
+randomness = 1.0
+lifetime_randomness = 0.6
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, -980)
+initial_velocity_min = 222.22
+initial_velocity_max = 459.59
+scale_amount_min = 0.2
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_62oct")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

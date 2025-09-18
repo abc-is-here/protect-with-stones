@@ -10,7 +10,9 @@ func _process(_delta: float) -> void:
 		if menu_in:
 			menu_in = false
 			$ColorRect.visible = false
+			$"../CanvasLayer".layer = 1
 		else:
 			menu_in = true
 			$ColorRect.visible = true
+			$"../CanvasLayer".layer = 0
 			

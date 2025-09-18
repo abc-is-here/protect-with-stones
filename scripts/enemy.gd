@@ -179,18 +179,14 @@ func lightning_strike(duration: float = 3.0) -> void:
 	speed_multiplier = 1.0
 	lightning = false
 
-#func vacuum(duration: float = 2.0) -> void:
-	#if near_vacuum: return
-	#near_vacuum = true
-	#speed_multiplier = 0.0
-	#velocity = Vector2.ZERO
-	#await get_tree().create_timer(duration).timeout
-	#speed_multiplier = 1.0
-	#near_vacuum = false
-
 func apply_vacuum_pull(target_pos: Vector2, strength: float, delta: float) -> void:
 	var dir = (target_pos - global_position).normalized()
 	var dist = target_pos.distance_to(global_position)
 
 	var force = strength / max(dist, 50.0)
 	vacuum_force += dir * force * delta
+
+
+func _on_other_enemy_body_entered(body: Node2D) -> void:
+	if body and body.is_in_group("enemy") and on_fire:
+		body.burn()

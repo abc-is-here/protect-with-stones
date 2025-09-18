@@ -80,8 +80,17 @@ position = Vector2(-43, -58)
 texture = ExtResource("3_4ra3w")
 
 [node name="player_catch" type="Area2D" parent="."]
+collision_mask = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_catch"]
+position = Vector2(-8, 0)
+shape = SubResource("CapsuleShape2D_4ra3w")
+
+[node name="other_enemy" type="Area2D" parent="."]
+collision_layer = 15
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="other_enemy"]
 position = Vector2(-8, 0)
 shape = SubResource("CapsuleShape2D_4ra3w")
 
@@ -133,4 +142,5 @@ scale_amount_curve = SubResource("Curve_otmr2")
 color_ramp = SubResource("Gradient_wtq4b")
 
 [connection signal="body_entered" from="player_catch" to="." method="_on_player_catch_body_entered"]
+[connection signal="body_entered" from="other_enemy" to="." method="_on_other_enemy_body_entered"]
 [connection signal="body_entered" from="head" to="." method="_on_head_body_entered"]

@@ -40,7 +40,7 @@ func _on_ground_detect_body_entered(body: Node2D) -> void:
 		is_on_ground = true
 		$lightning_root/Sprite2D.visible = true
 		$AnimationPlayer.play("lightning_strike")
-
+		await get_tree().create_timer(0.1).timeout
 		var lightning_area = $lightning_root/lightning
 		for enemy in lightning_area.get_overlapping_bodies():
 			if enemy.is_in_group("enemy"):
