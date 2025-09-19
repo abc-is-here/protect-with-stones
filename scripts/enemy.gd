@@ -142,6 +142,7 @@ func kill() -> void:
 	queue_free()
 
 func freeze(duration: float = 4.0) -> void:
+	decrease_health(10)
 	if frozen: return
 	frozen = true
 	on_fire = false
@@ -163,7 +164,7 @@ func burn(duration: float = 4.0) -> void:
 
 	for i in range(duration):
 		if not on_fire: break
-		decrease_health(5)
+		decrease_health(2)
 		await get_tree().create_timer(1.0).timeout
 
 	speed_multiplier = 1.0
@@ -173,7 +174,7 @@ func burn(duration: float = 4.0) -> void:
 func lightning_strike(duration: float = 3.0) -> void:
 	if lightning: return
 	lightning = true
-	decrease_health(20)
+	decrease_health(5)
 	speed_multiplier = 0.5
 	await get_tree().create_timer(duration).timeout
 	speed_multiplier = 1.0

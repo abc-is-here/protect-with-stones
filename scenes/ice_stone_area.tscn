@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://btyyy4ldf6ls2"]
+
+[ext_resource type="Script" uid="uid://dfx8xyttwaunb" path="res://scripts/ice_stone_area.gd" id="1_8eeea"]
+[ext_resource type="Texture2D" uid="uid://d3122gxv37660" path="res://addons/kenney_particle_pack/fire_01.png" id="2_8eeea"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cu5rn"]
+radius = 37.2156
+
+[sub_resource type="Gradient" id="Gradient_w08e2"]
+offsets = PackedFloat32Array(0, 0.536667)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_f7dpb"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[node name="ice_stone_area" type="Area2D"]
+script = ExtResource("1_8eeea")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cu5rn")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(1, 6, 3, 1)
+amount = 100
+texture = ExtResource("2_8eeea")
+lifetime = 0.33
+randomness = 1.0
+lifetime_randomness = 0.37
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 100)
+initial_velocity_min = 50.0
+initial_velocity_max = 60.0
+scale_amount_min = 0.06
+scale_amount_max = 0.2
+color_ramp = SubResource("Gradient_w08e2")
+hue_variation_curve = SubResource("Curve_f7dpb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

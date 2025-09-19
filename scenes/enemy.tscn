@@ -32,7 +32,7 @@ point_count = 2
 offsets = PackedFloat32Array(0, 0.536667)
 colors = PackedColorArray(1, 1, 1, 1, 0.476, 0.476, 0.476, 0)
 
-[node name="enemy" type="CharacterBody2D" groups=["character", "enemy", "respawnable"]]
+[node name="enemy" type="CharacterBody2D" groups=["burnable", "character", "enemy", "freezable", "lightningable"]]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_md0e3")

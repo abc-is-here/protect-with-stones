@@ -29,12 +29,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			if node and node.is_inside_tree():
 				node.queue_free()
 
-
-func _on_lightning_body_entered(body: Node2D) -> void:
-	if body and body.is_in_group("enemy") and is_on_ground:
-		body.decrease_health(20)
-
-
 func _on_ground_detect_body_entered(body: Node2D) -> void:
 	if body.is_in_group("ground") and not is_on_ground:
 		is_on_ground = true
@@ -42,9 +36,9 @@ func _on_ground_detect_body_entered(body: Node2D) -> void:
 		$AnimationPlayer.play("lightning_strike")
 		await get_tree().create_timer(0.1).timeout
 		var lightning_area = $lightning_root/lightning
-		for enemy in lightning_area.get_overlapping_bodies():
-			if enemy.is_in_group("enemy"):
-				enemy.decrease_health(20)
+		for bodies in lightning_area.get_overlapping_bodies():
+			if bodies.is_in_group("lightningable"):
+				bodies.lightning_strike()
 
 		await $AnimationPlayer.animation_finished
 		$lightning_root/lightning/CollisionShape2D.disabled = true

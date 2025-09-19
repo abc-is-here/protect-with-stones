@@ -45,6 +45,9 @@ blast_box=""
 water=""
 bullet=""
 ice_stone=""
+freezable=""
+burnable=""
+lightningable=""
 
 [gui]
 

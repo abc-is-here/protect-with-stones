@@ -24,7 +24,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			if node and node.is_inside_tree():
 				node.queue_free()
 	
-	if body and body.is_in_group("enemy"):
-		body.decrease_health(20)
+	if body and body.is_in_group("freezable"):
 		body.freeze()
 		queue_free()

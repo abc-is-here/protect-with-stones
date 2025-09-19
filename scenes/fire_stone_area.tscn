@@ -1,14 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfcf2pe4owyok"]
+[gd_scene load_steps=5 format=3 uid="uid://cfcf2pe4owyok"]
 
-[ext_resource type="Script" uid="uid://ciwglbt5aeikk" path="res://scripts/lightning_stone_area.gd" id="1_ba72f"]
+[ext_resource type="Script" uid="uid://cfts2jk0bspmc" path="res://scripts/fire_stone_area.gd" id="1_ba72f"]
+[ext_resource type="Shader" uid="uid://d1yn83p356dvb" path="res://assets/shaders/fire.gdshader" id="2_ba72f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cu5rn"]
 radius = 37.2156
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lhg4t"]
+shader = ExtResource("2_ba72f")
+shader_parameter/fire_color = Color(1, 0.33, 0.068, 1)
+shader_parameter/fire_power_factor = 2.0
+shader_parameter/fire_intensity = 3.0
+shader_parameter/fire_start = 1.0
+shader_parameter/ball_size = 1.0
+shader_parameter/roughness = 0.675
+shader_parameter/detail = 6
+shader_parameter/scale = 4.0
+shader_parameter/lacunarity = 2.0
 
 [node name="fire_stone_area" type="Area2D"]
 script = ExtResource("1_ba72f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cu5rn")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_lhg4t")
+offset_left = -125.0
+offset_top = 159.0
+offset_right = -31.0
+offset_bottom = 283.0
+rotation = -1.5708
+scale = Vector2(2, 2)
+color = Color(1, 1, 1, 0)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

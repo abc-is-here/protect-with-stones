@@ -319,3 +319,13 @@ func choose_lightning() -> void:
 	cur_stone = preload("res://scenes/stone_lightning.tscn")
 	await get_tree().create_timer(60).timeout
 	cur_stone = normal_stone
+
+func choose_fire() -> void:
+	cur_stone = preload("res://scenes/stone_fire.tscn")
+	await get_tree().create_timer(60).timeout
+	cur_stone = normal_stone
+
+func choose_ice() -> void:
+	cur_stone = preload("res://scenes/stone_ice.tscn")
+	await get_tree().create_timer(60).timeout
+	cur_stone = normal_stone
