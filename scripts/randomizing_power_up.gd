@@ -4,7 +4,7 @@ func _ready() -> void:
 	randomize()
 
 func _process(delta: float) -> void:
-	rotation+=5
+	rotation+=5*delta
 	
 
 func _on_body_entered(body: Node2D) -> void:

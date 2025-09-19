@@ -142,7 +142,7 @@ func kill() -> void:
 	queue_free()
 
 func freeze(duration: float = 4.0) -> void:
-	decrease_health(10)
+	decrease_health(5)
 	if frozen: return
 	frozen = true
 	on_fire = false
